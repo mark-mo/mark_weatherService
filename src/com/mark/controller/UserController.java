@@ -1,5 +1,5 @@
 package com.mark.controller;
 
-public class ScreenController {
+public class UserController {
 
 }

@@ -7,10 +7,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.mark.business.MoveBusiness;
-import com.mark.model.AccelSensorModel;
-//import com.mark.model.ResponseModel;
-import com.mark.model.MovePaddle;
+import com.mark.business.WeatherBusiness;
+import com.mark.model.WeatherSensorModel;
 
 /**
  * This class is REST Service that implements the REST API to support the Weather Sensor IoT.
@@ -54,7 +52,7 @@ public class RestService
     @Path("/save")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public AccelSensorModel saveAccelSensorData(AccelSensorModel model)
+    public WeatherSensorModel saveAccelSensorData(WeatherSensorModel model)
     {
     	model.setSensorName("Main");
 		// Log the API call
@@ -62,10 +60,10 @@ public class RestService
 //		logger.debug("Model: " + model.toString());
 			
 		// Send roll to a Move object
-    	MovePaddle currentMove = new MovePaddle(model.getRoll());
+    	WeatherBusiness business = new WeatherBusiness();
     	
     	// Send move to MoveBusiness
-    	MoveBusiness.addToQueue(currentMove);
+    	business.save(model);
 			
 		// Return OK Response
 		//ResponseModel response = new ResponseModel(1, "OK");
