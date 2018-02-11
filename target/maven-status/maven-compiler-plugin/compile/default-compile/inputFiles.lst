@@ -1,8 +1,6 @@
-C:\Users\Mark\workspace\WeatherApp\src\com\mark\model\MovePaddle.java
+C:\Users\Mark\workspace\WeatherApp\src\com\mark\dao\WeatherDao.java
 C:\Users\Mark\workspace\WeatherApp\src\com\mark\rest\RestService.java
-C:\Users\Mark\workspace\WeatherApp\src\com\mark\business\MoveBusiness.java
-C:\Users\Mark\workspace\WeatherApp\src\com\mark\model\AccelSensorModel.java
-C:\Users\Mark\workspace\WeatherApp\src\com\mark\controller\PaddleController.java
-C:\Users\Mark\workspace\WeatherApp\src\com\mark\model\ResponseDataModel.java
-C:\Users\Mark\workspace\WeatherApp\src\com\mark\controller\ScreenController.java
-C:\Users\Mark\workspace\WeatherApp\src\com\mark\model\ResponseModel.java
+C:\Users\Mark\workspace\WeatherApp\src\com\mark\business\WeatherBusiness.java
+C:\Users\Mark\workspace\WeatherApp\src\com\mark\dao\WeatherDaoInterface.java
+C:\Users\Mark\workspace\WeatherApp\src\com\mark\model\WeatherSensorModel.java
+C:\Users\Mark\workspace\WeatherApp\src\com\mark\controller\UserController.java

@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head>
+	<title><ui:insert name="title">CST-361 In-Class Activity</ui:insert></title>
+ 	<h:outputStylesheet library="css" name="common-style.css" />
+ 	<h:outputStylesheet library="css" name="album-style.css" />
+</h:head> 
+
+<h:body>
+
+	<div id="page">
+		<!-- Insert Header Facelet Here -->
+	    <div id="header" align="center">
+			<ui:insert name="header" >
+				<ui:include src="/layouts/commonHeader.xhtml" />
+			</ui:insert>
+	    </div>
+
+		<!-- Insert Content Facelet Here -->
+	    <div id="content">
+			<f:view>
+	  			<ui:insert name="content" >
+	 	  			<ui:include src="/layouts/commonContent.xhtml" />
+	   			</ui:insert>
+			</f:view>
+	    </div>
+
+		<!-- Insert Footer Facelet Here -->
+	    <div id="footer" align="center">
+	    	<ui:insert name="footer">
+	    		<ui:include src="/layouts/commonFooter.xhtml" />
+	    	</ui:insert>
+    	</div>
+	</div>
+
+</h:body>
+    
+</html>
