@@ -4,14 +4,10 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"> 
 
-<h:head>
-	<title>Weather Pi</title>
-</h:head> 
+<h:head></h:head> 
 <body> 
-	<h1>Weather Pi</h1>
-	<ul>
-		<li><a href="login.xhtml">Log in</a></li>
-		<li><a href="register.xhtml">Register</a></li>
-	</ul>
+	<h1>Pi Weather</h1>
+	<h2><h:outputText rendered="#{message ne null and not empty message}" value="#{message}" /></h2>
+	<p><a href="index.html">return home</a></p>
 </body> 
 </html>

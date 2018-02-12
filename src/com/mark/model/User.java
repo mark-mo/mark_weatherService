@@ -10,11 +10,11 @@ import javax.validation.constraints.Size;
 public class User {
 	@NotNull(message="This is a required field.")
 	@Size(min=3, message="Username must be 3 or more characters.")
-	private String username;
+	protected String username;
 	
 	@NotNull(message="This is a required field.")
 	@Size(min=6, message="Password must be 6 or more characters.")
-	private String password;
+	protected String password;
 	
 	public User() {
 		username = "";
