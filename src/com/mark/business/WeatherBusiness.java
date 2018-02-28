@@ -2,12 +2,12 @@ package com.mark.business;
 
 import com.mark.beans.WeatherSensorModel;
 import com.mark.data.WeatherDao;
-import com.mark.util.BadLoginException;
+import com.mark.exception.BadLoginException;
 
 public class WeatherBusiness {
 
-	public void save(WeatherSensorModel model) {
+	public boolean save(WeatherSensorModel model) {
 		WeatherDao dao = new WeatherDao();
-		dao.create(model);
+		return dao.create(model);
 	}
 }

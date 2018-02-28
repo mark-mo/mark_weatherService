@@ -10,8 +10,8 @@ import java.sql.Statement;
 import com.mark.exception.AlreadyRegisteredException;
 import com.mark.exception.BadLoginException;
 import com.mark.exception.DatabaseErrorException;
-import com.mark.model.Registration;
-import com.mark.model.User;
+import com.mark.beans.Registration;
+import com.mark.beans.User;
 
 public class UserDAO {
 	private Connection con;
@@ -25,9 +25,10 @@ public class UserDAO {
 		if (con == null) {
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				con = DriverManager.getConnection("jdbc:mysql://localhost:8889/weather", "root", "root");
+				con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sampledb", 
+						"userJM3", "edmkieSTSeP1Yuo8");
 			} catch(SQLException | ClassNotFoundException e) {
-				throw new DatabaseErrorException();
+				throw new DatabaseErrorException(e);
 			}
 		}
 	}
@@ -52,7 +53,10 @@ public class UserDAO {
 				throw new BadLoginException();
 			}
 		} catch(SQLException e) {
-			throw new DatabaseErrorException(); // TODO maybe better error to give...
+			throw new DatabaseErrorException(e); // TODO maybe better error to give...
+		} catch (BadLoginException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -84,10 +88,10 @@ public class UserDAO {
 			
 			// Throw DatabaseErrorException is rows affected is less than 1
 			if (rowsAffected < 1) {
-				throw new DatabaseErrorException();
+				throw new SQLException();
 			}
 		} catch(SQLException e) {
-			throw new DatabaseErrorException(); // TODO maybe better error to give...
+			throw new DatabaseErrorException(e); // TODO maybe better error to give...
 		}
 	}
 }

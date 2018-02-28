@@ -1,6 +1,13 @@
 package com.mark.exception;
 
-@SuppressWarnings("serial")
-public class BadLoginException extends RuntimeException {
+public class BadLoginException extends Exception {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public BadLoginException() {
+		super();
+	}
 }

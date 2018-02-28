@@ -1,5 +1,11 @@
 package com.mark.util;
 
+/**
+ * A collection of months for DateTime to translate from the abbreviation to the number
+ * 
+ * @author Mark
+ *
+ */
 public enum Month {
 	Jan ("01"),
 	Feb ("02"),

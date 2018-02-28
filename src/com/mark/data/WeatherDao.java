@@ -14,8 +14,8 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import com.mark.beans.WeatherSensorModel;
-import com.mark.util.BadLoginException;
-import com.mark.util.DatabaseException;
+import com.mark.exception.BadLoginException;
+import com.mark.exception.DatabaseErrorException;
 
 @Stateless
 @Local(DataAccessInterface.class)
@@ -40,7 +40,7 @@ public class WeatherDao implements DataAccessInterface<WeatherSensorModel> {
 				 */
 			} catch (SQLException e) {
 				e.printStackTrace();
-				throw new DatabaseException(e);
+				throw new DatabaseErrorException(e);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
@@ -63,7 +63,7 @@ public class WeatherDao implements DataAccessInterface<WeatherSensorModel> {
 			ResultSet rs = stmt.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DatabaseException(e);
+			throw new DatabaseErrorException(e);
 		} finally {
 			// Cleanup Database
 			if (con != null) {
@@ -71,7 +71,7 @@ public class WeatherDao implements DataAccessInterface<WeatherSensorModel> {
 					con.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
-					throw new DatabaseException(e);
+					throw new DatabaseErrorException(e);
 				}
 			}
 		}
@@ -99,7 +99,7 @@ public class WeatherDao implements DataAccessInterface<WeatherSensorModel> {
 			// return albums;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DatabaseException(e);
+			throw new DatabaseErrorException(e);
 		} finally {
 			// Cleanup Database
 			if (con != null) {
@@ -107,7 +107,7 @@ public class WeatherDao implements DataAccessInterface<WeatherSensorModel> {
 					con.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
-					throw new DatabaseException(e);
+					throw new DatabaseErrorException(e);
 				}
 			}
 		}
