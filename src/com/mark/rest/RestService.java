@@ -7,8 +7,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.mark.beans.ResponseModel;
+import com.mark.beans.WeatherSensorModel;
 import com.mark.business.WeatherBusiness;
-import com.mark.model.WeatherSensorModel;
 
 /**
  * This class is REST Service that implements the REST API to support the Weather Sensor IoT.
@@ -48,12 +49,13 @@ public class RestService
      * @param model The Weather Data to save.
      * @return Response Model with error code of 1 for no error, 0 if save failed, -2 if database error
      */
-    @GET
+    @POST
     @Path("/save")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public WeatherSensorModel saveAccelSensorData(WeatherSensorModel model)
+    public ResponseModel saveAccelSensorData(WeatherSensorModel model)
     {
+    	System.out.println("In save");
     	model.setSensorName("Main");
 		// Log the API call
 //		logger.info("Entering RestService.saveTemperatureSensorData()");
@@ -66,9 +68,9 @@ public class RestService
     	business.save(model);
 			
 		// Return OK Response
-		//ResponseModel response = new ResponseModel(1, "OK");
+		ResponseModel response = new ResponseModel(1, "OK");
        		
-		return model;
+		return response;
     }
 
     /**
