@@ -14,7 +14,6 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import com.mark.beans.WeatherSensorModel;
-import com.mark.exception.BadLoginException;
 import com.mark.exception.DatabaseErrorException;
 
 @Stateless

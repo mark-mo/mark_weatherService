@@ -1,7 +1,6 @@
 package com.mark.beans;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.mark.util.Month;

@@ -2,6 +2,7 @@ package com.mark.business;
 
 import com.mark.beans.User;
 import com.mark.data.UserDAO;
+import com.mark.exception.BadLoginException;
 import com.mark.exception.PasswordMismatchException;
 import com.mark.beans.Registration;
 
@@ -12,7 +13,7 @@ public class UserService {
 		service = new UserDAO();
 	}
 	
-	public void login(User user) {
+	public void login(User user) throws BadLoginException {
 		service.findByUser(user);
 	}
 	
