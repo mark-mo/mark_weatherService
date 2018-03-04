@@ -31,8 +31,8 @@ public class WeatherDao implements DataAccessInterface<WeatherSensorModel> {
 		if (con == null) {
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sampledb", 
-						"userJM3", "edmkieSTSeP1Yuo8");
+				con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Weather", 
+						"weather", "weatherPiProject361");
 				/*
 				 * } catch(SQLException | ClassNotFoundException e) { throw new
 				 * DatabaseErrorException(); }
@@ -52,7 +52,7 @@ public class WeatherDao implements DataAccessInterface<WeatherSensorModel> {
 
 		try {
 			// Query for # of rows with matching username and password
-			String query = "INSERT INTO readings (HUMIDITY, PRESSURE, TIME) VALUES (?, ?, ?)";
+			String query = "INSERT INTO READINGS (HUMIDITY, PRESSURE, DATETIME) VALUES (?, ?, ?)";
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setDouble(1, model.getHumidity());
 			stmt.setDouble(2, (long) model.getPressure());
