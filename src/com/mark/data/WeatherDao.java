@@ -32,7 +32,7 @@ public class WeatherDao implements DataAccessInterface<WeatherSensorModel> {
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
 				con = DriverManager.getConnection("jdbc:mysql://mysql:3306/Weather", 
-						"weather", "weatherPiProject361");
+						"petclinic", "password");
 				/*
 				 * } catch(SQLException | ClassNotFoundException e) { throw new
 				 * DatabaseErrorException(); }
