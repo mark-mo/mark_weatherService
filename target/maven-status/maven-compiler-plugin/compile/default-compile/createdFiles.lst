@@ -1,11 +1,13 @@
+com\mark\data\WeatherDAO.class
+com\mark\model\Registration.class
 com\mark\beans\ResponseDataModel.class
 com\mark\exception\BadLoginException.class
 com\mark\exception\AlreadyRegisteredException.class
+com\mark\model\User.class
 com\mark\controller\ReportController.class
 com\mark\util\Month.class
 com\mark\business\WeatherBusiness.class
 com\mark\data\DataAccessInterface.class
-com\mark\data\WeatherDao.class
 com\mark\exception\DatabaseErrorException.class
 com\mark\beans\Registration.class
 com\mark\controller\UserController.class

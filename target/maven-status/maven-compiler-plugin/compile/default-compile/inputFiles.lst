@@ -1,6 +1,8 @@
 C:\Users\Mark\workspace\WeatherApp\src\com\mark\business\UserService.java
 C:\Users\Mark\workspace\WeatherApp\src\com\mark\data\UserDAO.java
 C:\Users\Mark\workspace\WeatherApp\src\com\mark\rest\RestService.java
+C:\Users\Mark\workspace\WeatherApp\src\com\mark\model\Registration.java
+C:\Users\Mark\workspace\WeatherApp\src\com\mark\model\User.java
 C:\Users\Mark\workspace\WeatherApp\src\com\mark\business\WeatherBusiness.java
 C:\Users\Mark\workspace\WeatherApp\src\com\mark\exception\BadLoginException.java
 C:\Users\Mark\workspace\WeatherApp\src\com\mark\beans\WeatherSensorModel.java
@@ -8,7 +10,7 @@ C:\Users\Mark\workspace\WeatherApp\src\com\mark\beans\ResponseDataModel.java
 C:\Users\Mark\workspace\WeatherApp\src\com\mark\exception\AlreadyRegisteredException.java
 C:\Users\Mark\workspace\WeatherApp\src\com\mark\beans\User.java
 C:\Users\Mark\workspace\WeatherApp\src\com\mark\util\Month.java
-C:\Users\Mark\workspace\WeatherApp\src\com\mark\data\WeatherDao.java
+C:\Users\Mark\workspace\WeatherApp\src\com\mark\data\WeatherDAO.java
 C:\Users\Mark\workspace\WeatherApp\src\com\mark\exception\DatabaseErrorException.java
 C:\Users\Mark\workspace\WeatherApp\src\com\mark\data\DataAccessInterface.java
 C:\Users\Mark\workspace\WeatherApp\src\com\mark\util\HtmlCode.java
