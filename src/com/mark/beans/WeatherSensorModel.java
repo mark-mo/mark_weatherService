@@ -37,13 +37,13 @@ public class WeatherSensorModel {
 		this.humidity = humidity;
 		this.pressure = pressure;
 		
-		Date date = new Date();
-		time = DateFormat.getDateInstance().format(date);
+		//Date date = new Date();
+		//time = DateFormat.getDateInstance().format(date);
 		
-		time = date.toString();
+		//time = date.toString();
 		
-		System.out.println("Original Time: " + time);
-		setFormatTime(time);
+		//System.out.println("Original Time: " + time);
+		//setFormatTime(time);
 	}
 	
 	public WeatherSensorModel(int humidity, int pressure, String time) {
