@@ -127,6 +127,7 @@ public class WeatherSensorModel {
 
 	// Breaks apart the given string and formats the string to the correct DateTime for JavaScript
 	public void setFormatTime(String date) {
+		
 		this.setDow(date.substring(0, 3));
 		date = date.substring(4);
 		this.month = date.substring(0, 3);

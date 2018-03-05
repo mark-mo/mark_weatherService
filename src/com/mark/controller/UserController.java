@@ -9,8 +9,8 @@ import com.mark.exception.AlreadyRegisteredException;
 import com.mark.exception.BadLoginException;
 import com.mark.exception.DatabaseErrorException;
 import com.mark.exception.PasswordMismatchException;
-import com.mark.model.Registration;
-import com.mark.model.User;
+import com.mark.beans.Registration;
+import com.mark.beans.User;
 
 @ManagedBean
 @ViewScoped
