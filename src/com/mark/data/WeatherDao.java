@@ -19,47 +19,50 @@ import com.mark.exception.DatabaseErrorException;
 @Stateless
 @Local(DataAccessInterface.class)
 @LocalBean
-public class WeatherDao implements DataAccessInterface<WeatherSensorModel> {
+public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
 	private Connection con;
 
-	public WeatherDao() {
+	public WeatherDAO() {
 		// null at first, to be set later
 		con = null;
 	}
 
+	/**
+	 * Sets connection to class variable con
+	 */
 	public void makeConnection() {
 		if (con == null) {
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				con = DriverManager.getConnection("jdbc:mysql://mysql:3306/Weather", 
-						"petclinic", "password");
-				/*
-				 * } catch(SQLException | ClassNotFoundException e) { throw new
-				 * DatabaseErrorException(); }
-				 */
-			} catch (SQLException e) {
-				e.printStackTrace();
+				con = DriverManager.getConnection("jdbc:mysql://joshsand.com:3306/weather-pi", "just-for-weather", "weathPiProject361");
+			} catch(SQLException | ClassNotFoundException e) {
 				throw new DatabaseErrorException(e);
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
 			}
 		}
 	}
 
+	/**
+	 * Adds a WeatherSensorModel reading to the database.
+	 * 
+	 * @param model
+	 *            Reading to add (with properties "humidity", "pressure", and "time").
+	 * @return boolean
+	 *            Always returns true. Can probably convert method to void
+	 */
 	@Override
 	public boolean create(WeatherSensorModel model) {
 		makeConnection();
 
 		try {
-			// Query for # of rows with matching username and password
+			// Build inesrt query
 			String query = "INSERT INTO READINGS (HUMIDITY, PRESSURE, DATETIME) VALUES (?, ?, ?)";
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setDouble(1, model.getHumidity());
 			stmt.setDouble(2, (long) model.getPressure());
-			stmt.setString(2, model.getTime());
+			stmt.setString(3, model.getTime());
 
-			// Execute query and get COUNT from results
-			ResultSet rs = stmt.executeQuery();
+			// Execute query
+			stmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DatabaseErrorException(e);
@@ -77,25 +80,27 @@ public class WeatherDao implements DataAccessInterface<WeatherSensorModel> {
 		return true;
 	}
 
-	// Finds past 10 entries
+	/**
+	 * Returns list of every WeatherSensorModel from the database.
+	 * 
+	 * @return List<WeatherSensorModel>
+	 *            All readings (with properties "humidity", "pressure", and "time").
+	 */
 	@Override
 	public List<WeatherSensorModel> findAll() {
 		makeConnection();
 		List<WeatherSensorModel> weatherList = new ArrayList<WeatherSensorModel>();
 
 		try {
-			String sql1 = "SELECT * FROM WEATHER";
+			String sql1 = "SELECT * FROM READINGS";
 			Statement stmt1 = con.createStatement();
 			ResultSet rs1 = stmt1.executeQuery(sql1);
 			while (rs1.next()) {
-				WeatherSensorModel weather = new WeatherSensorModel(rs1.getInt("HUMIDITY"), rs1.getInt("PRESSURE"), rs1.getString("TIME"));
-
+				WeatherSensorModel weather = new WeatherSensorModel(rs1.getInt("HUMIDITY"), rs1.getInt("PRESSURE"), rs1.getString("DATETIME"));
 				weatherList.add(weather);
 			}
 			rs1.close();
 			stmt1.close();
-
-			// return albums;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DatabaseErrorException(e);
@@ -120,19 +125,19 @@ public class WeatherDao implements DataAccessInterface<WeatherSensorModel> {
 	}
 
 	@Override
-	public WeatherSensorModel findBy(WeatherSensorModel t) {
+	public WeatherSensorModel findBy(WeatherSensorModel model) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean update(WeatherSensorModel t) {
+	public boolean update(WeatherSensorModel model) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean delete(WeatherSensorModel t) {
+	public boolean delete(WeatherSensorModel model) {
 		// TODO Auto-generated method stub
 		return false;
 	}

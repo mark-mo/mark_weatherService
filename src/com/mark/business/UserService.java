@@ -1,10 +1,10 @@
 package com.mark.business;
 
-import com.mark.beans.User;
+import com.mark.model.User;
 import com.mark.data.UserDAO;
 import com.mark.exception.BadLoginException;
 import com.mark.exception.PasswordMismatchException;
-import com.mark.beans.Registration;
+import com.mark.model.Registration;
 
 public class UserService {
 	UserDAO service;

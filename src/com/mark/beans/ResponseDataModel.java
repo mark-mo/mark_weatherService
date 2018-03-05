@@ -11,25 +11,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 @ManagedBean
 @ViewScoped
-public class ResponseDataModel extends ResponseModel {
-	private WeatherSensorModel data;
+public class ResponseDataModel<T> extends ResponseModel {
+	private T data;
 	
 	public ResponseDataModel() {
 		super(0, "");
-		data = new WeatherSensorModel();
+		data = null;
 	}
 	
-	public ResponseDataModel(int status, String message, WeatherSensorModel data) {
+	public ResponseDataModel(int status, String message, T data) {
 		super(status, message);
-		
 		this.data = data;
 	}
 
-	public WeatherSensorModel getData() {
+	public T getData() {
 		return data;
 	}
 
-	public void setData(WeatherSensorModel data) {
+	public void setData(T data) {
 		this.data = data;
 	}
 }
