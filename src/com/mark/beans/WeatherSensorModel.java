@@ -33,7 +33,7 @@ public class WeatherSensorModel {
 		setFormatTime(time);
 	}
 	
-	public WeatherSensorModel(int humidity, int pressure) {
+	public WeatherSensorModel(double humidity, double pressure) {
 		this.humidity = humidity;
 		this.pressure = pressure;
 		
