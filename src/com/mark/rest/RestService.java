@@ -53,8 +53,8 @@ public class RestService {
 	 */
 	@POST
 	@Path("/save")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes("application/json")
+	@Produces("application/json")
 	public ResponseModel saveAccelSensorData(WeatherSensorModel model) {
 		System.out.println("In save");
 		model.setSensorName("Main");
