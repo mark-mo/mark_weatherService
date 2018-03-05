@@ -5,7 +5,6 @@ import javax.faces.bean.ViewScoped;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@SuppressWarnings("deprecation")
 @ManagedBean
 @ViewScoped
 public class User {
