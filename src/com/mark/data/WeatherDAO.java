@@ -31,16 +31,9 @@ public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
 		if (con == null) {
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Weather", 
-						"weather", "weatherPiProject361");
-				/*
-				 * } catch(SQLException | ClassNotFoundException e) { throw new
-				 * DatabaseErrorException(); }
-				 */
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new DatabaseErrorException(e);
-			} catch (ClassNotFoundException e) {
+				con = DriverManager.getConnection("jdbc:mysql://joshsand.com:3306/weather-pi", "just-for-weather",
+						"weathPiProject361");
+			} catch (SQLException | ClassNotFoundException e) {
 				e.printStackTrace();
 			}
 		}
@@ -52,14 +45,10 @@ public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
 
 		try {
 			// Query for # of rows with matching username and password
-			String query = "INSERT INTO READINGS (HUMIDITY, PRESSURE, DATETIME) VALUES (?, ?, ?)";
-			PreparedStatement stmt = con.prepareStatement(query);
-			stmt.setDouble(1, model.getHumidity());
-			stmt.setDouble(2, (long) model.getPressure());
-			stmt.setString(2, model.getTime());
-
-			// Execute query and get COUNT from results
-			ResultSet rs = stmt.executeQuery();
+			String sql1 = String.format("INSERT INTO READINGS (HUMIDITY, PRESSURE, DATETIME) VALUES (%f, %f, '%s')",
+					model.getHumidity(), model.getPressure(), model.getTime());
+			Statement stmt1 = con.createStatement();
+			stmt1.executeUpdate(sql1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DatabaseErrorException(e);
@@ -88,7 +77,8 @@ public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
 			Statement stmt1 = con.createStatement();
 			ResultSet rs1 = stmt1.executeQuery(sql1);
 			while (rs1.next()) {
-				WeatherSensorModel weather = new WeatherSensorModel(rs1.getInt("HUMIDITY"), rs1.getInt("PRESSURE"), rs1.getString("TIME"));
+				WeatherSensorModel weather = new WeatherSensorModel(rs1.getInt("HUMIDITY"), rs1.getInt("PRESSURE"),
+						rs1.getString("TIME"));
 
 				weatherList.add(weather);
 			}

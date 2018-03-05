@@ -25,16 +25,9 @@ public class UserDAO {
 		if (con == null) {
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Weather", 
-						"weather", "weatherPiProject361");
-				/*
-				 * } catch(SQLException | ClassNotFoundException e) { throw new
-				 * DatabaseErrorException(); }
-				 */
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new DatabaseErrorException(e);
-			} catch (ClassNotFoundException e) {
+				con = DriverManager.getConnection("jdbc:mysql://joshsand.com:3306/weather-pi", "just-for-weather",
+						"weathPiProject361");
+			} catch (SQLException | ClassNotFoundException e) {
 				e.printStackTrace();
 			}
 		}
