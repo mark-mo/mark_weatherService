@@ -22,9 +22,11 @@ public class UserDAO {
 	}
 	
 	public void makeConnection() {
+		System.out.println("In makeConnection()");
 		if (con == null) {
 			// DB Connection Info
 			con = null;
+			System.out.println("Connection is null");
 			String url = "jdbc:mysql://172.30.79.95:3306/Weather";
 			String username = "weather";
 			String password = "weathPiProject361";
@@ -32,6 +34,8 @@ public class UserDAO {
 			try {
 				// Connect to database
 				con = DriverManager.getConnection(url, username, password);
+
+				System.out.println("Connection is made");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
