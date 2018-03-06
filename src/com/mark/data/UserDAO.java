@@ -38,15 +38,17 @@ public class UserDAO {
 				System.out.println("Connection is made");
 			} catch (SQLException e) {
 				e.printStackTrace();
+			} catch (Exception e1) {
+				e1.printStackTrace();
 			}
 		}
 	}
 	
 	public void findByUser(User user) {
 		makeConnection();
-		
+
+		System.out.println("In findByUser");
 		try {
-			System.out.println("In findByUser");
 			// Query for # of rows with matching username and password
 			String query = "SELECT COUNT(*) AS COUNT FROM USERS WHERE USERNAME=? AND PASSWORD=?";
 			PreparedStatement stmt = con.prepareStatement(query);
