@@ -46,6 +46,7 @@ public class UserDAO {
 		makeConnection();
 		
 		try {
+			System.out.println("In findByUser");
 			// Query for # of rows with matching username and password
 			String query = "SELECT COUNT(*) AS COUNT FROM USERS WHERE USERNAME=? AND PASSWORD=?";
 			PreparedStatement stmt = con.prepareStatement(query);
@@ -62,6 +63,8 @@ public class UserDAO {
 				throw new BadLoginException();
 			}
 		} catch(SQLException e) {
+
+			e.printStackTrace();
 			throw new DatabaseErrorException(e); // TODO maybe better error to give...
 		} catch (BadLoginException e) {
 			// TODO Auto-generated catch block
