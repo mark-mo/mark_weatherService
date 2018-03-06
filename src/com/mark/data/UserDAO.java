@@ -23,11 +23,16 @@ public class UserDAO {
 	
 	public void makeConnection() {
 		if (con == null) {
+			// DB Connection Info
+			con = null;
+			String url = "jdbc:mysql://172.30.79.95:3306/Weather";
+			String username = "weather";
+			String password = "weathPiProject361";
+
 			try {
-				Class.forName("com.mysql.cj.jdbc.Driver");
-				con = DriverManager.getConnection("jdbc:mysql://172.30.79.95:3306/Weather", "weather",
-						"weathPiProject361");
-			} catch (SQLException | ClassNotFoundException e) {
+				// Connect to database
+				con = DriverManager.getConnection(url, username, password);
+			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
