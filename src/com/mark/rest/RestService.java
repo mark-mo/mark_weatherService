@@ -7,6 +7,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.mark.beans.ResponseDataModel;
 import com.mark.beans.ResponseModel;
 import com.mark.beans.WeatherSensorModel;
 import com.mark.business.WeatherBusiness;
@@ -63,17 +64,17 @@ public class RestService {
 		// logger.debug("Model: " + model.toString());
 
 		// Send model to database
-		// WeatherBusiness business = new WeatherBusiness();
+		WeatherBusiness business = new WeatherBusiness();
 
-		// if (business.save(model)) {
-		// Return OK Response
-		ResponseModel response = new ResponseModel(HtmlCode.Success.getIdentifier(), "OK");
-		return response;
-		// }
-		// else {
-		//ResponseModel response = new ResponseModel(HtmlCode.BadRequest.getIdentifier(), "Bad Request");
-		//return response;
-		// }
+		if (business.save(model)) {
+			// Return OK Response
+			ResponseModel response = new ResponseModel(HtmlCode.Success.getIdentifier(), "OK");
+			return response;
+		}
+		else {
+			ResponseModel response = new ResponseModel(HtmlCode.BadRequest.getIdentifier(), "Bad Request");
+			return response;
+		}
 	}
 
 	/**
