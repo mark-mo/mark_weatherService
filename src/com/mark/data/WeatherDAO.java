@@ -50,7 +50,7 @@ public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
 
 		try {
 			// Query for # of rows with matching username and password
-			String sql1 = String.format("INSERT INTO READINGS (HUMIDITY, PRESSURE, DATETIME) VALUES (%f, %f, '%s')",
+			String sql1 = String.format("INSERT INTO readings (HUMIDITY, PRESSURE, DATETIME) VALUES (%f, %f, '%s')",
 					model.getHumidity(), model.getPressure(), model.getTime());
 			Statement stmt1 = con.createStatement();
 			stmt1.executeUpdate(sql1);
@@ -78,12 +78,12 @@ public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
 		List<WeatherSensorModel> weatherList = new ArrayList<WeatherSensorModel>();
 
 		try {
-			String sql1 = "SELECT * FROM WEATHER";
+			String sql1 = "SELECT * FROM readings";
 			Statement stmt1 = con.createStatement();
 			ResultSet rs1 = stmt1.executeQuery(sql1);
 			while (rs1.next()) {
 				WeatherSensorModel weather = new WeatherSensorModel(rs1.getInt("HUMIDITY"), rs1.getInt("PRESSURE"),
-						rs1.getString("TIME"));
+						rs1.getString("DATETIME"));
 
 				weatherList.add(weather);
 			}
