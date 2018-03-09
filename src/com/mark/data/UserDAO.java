@@ -7,12 +7,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.ejb.Local;
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
+
 import com.mark.exception.AlreadyRegisteredException;
 import com.mark.exception.BadLoginException;
 import com.mark.exception.DatabaseErrorException;
 
 import com.mark.beans.Registration;
 
+@Stateless
+@Local(DataAccessInterface.class)
+@LocalBean
 public class UserDAO implements DataAccessInterface<Registration> {
 	private Connection con;
 	

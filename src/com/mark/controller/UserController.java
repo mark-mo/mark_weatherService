@@ -5,7 +5,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import com.mark.business.UserService;
 import com.mark.business.UserServiceInterface;
 import com.mark.exception.AlreadyRegisteredException;
 import com.mark.exception.BadLoginException;
@@ -53,7 +52,6 @@ public class UserController {
 		Registration registration = context.getApplication().evaluateExpressionGet(context, "#{registration}", Registration.class);
 		
 		// Send Registration to service for verification + insert
-		UserService service = new UserService();
 		try {
 			service.register(registration);
 		} catch(PasswordMismatchException e) {

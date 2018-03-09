@@ -16,9 +16,9 @@ import com.mark.beans.WeatherSensorModel;
 import com.mark.exception.DatabaseErrorException;
 
 @Stateless
-@Local(DataAccessInterface.class)
+@Local(DataAccessInterface1.class)
 @LocalBean
-public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
+public class WeatherDAO implements DataAccessInterface1<WeatherSensorModel> {
 	private Connection con;
 
 	public WeatherDAO() {

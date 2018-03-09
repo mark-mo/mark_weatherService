@@ -6,9 +6,15 @@ import com.mark.exception.BadLoginException;
 import com.mark.exception.PasswordMismatchException;
 
 import javax.ejb.EJB;
+import javax.ejb.Local;
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 
 import com.mark.beans.Registration;
 
+@Stateless
+@Local(UserServiceInterface.class)
+@LocalBean
 public class UserService implements UserServiceInterface {
 	@EJB
 	DataAccessInterface<User> service;
