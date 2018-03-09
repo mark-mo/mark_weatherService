@@ -1,10 +1,12 @@
 package com.mark.controller;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import com.mark.business.UserService;
+import com.mark.business.UserServiceInterface;
 import com.mark.exception.AlreadyRegisteredException;
 import com.mark.exception.BadLoginException;
 import com.mark.exception.DatabaseErrorException;
@@ -16,13 +18,15 @@ import com.mark.beans.User;
 @ViewScoped
 public class UserController {
 
+	@EJB
+	UserServiceInterface service;
+	
 	public String loginSubmit() {
 		// Get the User model from POST
 		FacesContext context = FacesContext.getCurrentInstance();
 		User user = context.getApplication().evaluateExpressionGet(context, "#{user}", User.class);
 		
 		// Send User to service for verification
-		UserService service = new UserService();
 		try {
 			service.login(user);
 		} catch(BadLoginException e) {

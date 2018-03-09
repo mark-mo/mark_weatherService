@@ -2,6 +2,7 @@ package com.mark.rest;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -12,7 +13,7 @@ import javax.ws.rs.core.MediaType;
 import com.mark.beans.ResponseDataModel;
 import com.mark.beans.ResponseModel;
 import com.mark.beans.WeatherSensorModel;
-import com.mark.business.WeatherBusiness;
+import com.mark.business.WeatherServiceInterface;
 import com.mark.exception.DatabaseErrorException;
 import com.mark.util.HtmlCode;
 
@@ -26,7 +27,8 @@ import com.mark.util.HtmlCode;
 @Path("/weather")
 public class RestService {
 	// Logger logger = LoggerFactory.getLogger(RestService.class);
-	// static WeatherServiceInterface service;
+	@EJB
+	WeatherServiceInterface service;
 
 	/**
 	 * Test Service API at /test using HTTP GET.
@@ -67,9 +69,8 @@ public class RestService {
 		// logger.debug("Model: " + model.toString());
 
 		// Send model to database
-		WeatherBusiness business = new WeatherBusiness();
 
-		if (business.save(model)) {
+		if (service.save(model)) {
 			// Return OK Response
 			ResponseModel response = new ResponseModel(HtmlCode.Success.getIdentifier(), "OK");
 			return response;
@@ -83,11 +84,10 @@ public class RestService {
 	@Path("/readings")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ResponseModel getReadings() {
-		WeatherBusiness business = new WeatherBusiness();
 		ResponseModel response;
 
 		try {
-			List<WeatherSensorModel> readings = business.getReadings();
+			List<WeatherSensorModel> readings = service.getReadings();
 			response = new ResponseDataModel<List<WeatherSensorModel>>(HtmlCode.Success.getIdentifier(), "OK",
 					readings);
 		} catch (DatabaseErrorException e) {

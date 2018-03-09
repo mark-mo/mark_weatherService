@@ -1,20 +1,23 @@
 package com.mark.business;
 
 import com.mark.beans.User;
-import com.mark.data.UserDAO;
+import com.mark.data.DataAccessInterface;
 import com.mark.exception.BadLoginException;
 import com.mark.exception.PasswordMismatchException;
+
+import javax.ejb.EJB;
+
 import com.mark.beans.Registration;
 
-public class UserService {
-	UserDAO service;
+public class UserService implements UserServiceInterface {
+	@EJB
+	DataAccessInterface<User> service;
 	
 	public UserService() {
-		service = new UserDAO();
 	}
 	
 	public void login(User user) throws BadLoginException {
-		service.findByUser(user);
+		service.findBy(user);
 	}
 	
 	public void register(Registration registration) {
@@ -26,6 +29,6 @@ public class UserService {
 		}
 		
 		// Otherwise send to DAO for insert
-		service.createUser(registration);
+		service.create(registration);
 	}
 }

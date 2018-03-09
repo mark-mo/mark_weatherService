@@ -5,15 +5,15 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.List;
 
 import com.mark.exception.AlreadyRegisteredException;
 import com.mark.exception.BadLoginException;
 import com.mark.exception.DatabaseErrorException;
-import com.mark.beans.Registration;
-import com.mark.beans.User;
 
-public class UserDAO {
+import com.mark.beans.Registration;
+
+public class UserDAO implements DataAccessInterface<Registration> {
 	private Connection con;
 	
 	public UserDAO() {
@@ -44,7 +44,8 @@ public class UserDAO {
 		}
 	}
 	
-	public void findByUser(User user) {
+	@Override
+	public Registration findBy(Registration user) {
 		makeConnection();
 
 		System.out.println("In findByUser");
@@ -57,13 +58,14 @@ public class UserDAO {
 	
 			// Execute query and get COUNT from results
 			ResultSet rs = stmt.executeQuery();
-			rs.next();
-			int count = rs.getInt("COUNT");
-			
-			// Throw BadLoginException if count is less than 1
-			if (count < 1) {
+			if (!rs.next()) {
+				rs.close();
+				stmt.close();
+
 				throw new BadLoginException();
 			}
+			user.setUsername(rs.getString(1));
+			user.setPassword(rs.getString(2));
 		} catch(SQLException e) {
 
 			e.printStackTrace();
@@ -71,10 +73,21 @@ public class UserDAO {
 		} catch (BadLoginException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			// Cleanup Database
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					throw new DatabaseErrorException(e);
+				}
+			}
 		}
+		return user;
 	}
 	
-	public void createUser(Registration user) {
+	public boolean create(Registration user) {
 		makeConnection();
 		
 		try {
@@ -104,8 +117,45 @@ public class UserDAO {
 			if (rowsAffected < 1) {
 				throw new SQLException();
 			}
-		} catch(SQLException e) {
+		}
+		catch(SQLException e) {
 			throw new DatabaseErrorException(e); // TODO maybe better error to give...
 		}
+		finally {
+			// Cleanup Database
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					throw new DatabaseErrorException(e);
+				}
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public List<Registration> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Registration findByID(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean update(Registration t) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean delete(Registration t) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
