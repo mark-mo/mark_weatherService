@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.inject.Named;
 
 import com.mark.exception.AlreadyRegisteredException;
 import com.mark.exception.BadLoginException;
@@ -20,6 +21,7 @@ import com.mark.beans.Registration;
 @Stateless
 @Local(DataAccessInterface.class)
 @LocalBean
+@Named
 public class UserDAO implements DataAccessInterface<Registration> {
 	private Connection con;
 	
@@ -73,6 +75,8 @@ public class UserDAO implements DataAccessInterface<Registration> {
 			}
 			user.setUsername(rs.getString(1));
 			user.setPassword(rs.getString(2));
+			rs.close();
+			stmt.close();
 		} catch(SQLException e) {
 
 			e.printStackTrace();
@@ -112,6 +116,7 @@ public class UserDAO implements DataAccessInterface<Registration> {
 			if (count > 0) {
 				throw new AlreadyRegisteredException();
 			}
+			rs.close();
 			
 			// Otherwise, add to USERS
 			query = "INSERT INTO USERS (USERNAME, PASSWORD) VALUES (?,?);";
@@ -124,6 +129,7 @@ public class UserDAO implements DataAccessInterface<Registration> {
 			if (rowsAffected < 1) {
 				throw new SQLException();
 			}
+			stmt.close();
 		}
 		catch(SQLException e) {
 			throw new DatabaseErrorException(e); // TODO maybe better error to give...

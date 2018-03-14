@@ -11,14 +11,16 @@ import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.inject.Named;
 
 import com.mark.beans.WeatherSensorModel;
 import com.mark.exception.DatabaseErrorException;
 
 @Stateless
-@Local(DataAccessInterface1.class)
+@Local(DataAccessInterface.class)
 @LocalBean
-public class WeatherDAO implements DataAccessInterface1<WeatherSensorModel> {
+@Named
+public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
 	private Connection con;
 
 	public WeatherDAO() {
@@ -53,6 +55,7 @@ public class WeatherDAO implements DataAccessInterface1<WeatherSensorModel> {
 					model.getHumidity(), model.getPressure(), model.getTime());
 			Statement stmt1 = con.createStatement();
 			stmt1.executeUpdate(sql1);
+			stmt1.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DatabaseErrorException(e);
@@ -80,6 +83,7 @@ public class WeatherDAO implements DataAccessInterface1<WeatherSensorModel> {
 			String sql1 = "SELECT * FROM readings";
 			Statement stmt1 = con.createStatement();
 			ResultSet rs1 = stmt1.executeQuery(sql1);
+			
 			while (rs1.next()) {
 				WeatherSensorModel weather = new WeatherSensorModel(rs1.getInt("HUMIDITY"), rs1.getInt("PRESSURE"),
 						rs1.getString("DATETIME"));
