@@ -10,12 +10,13 @@ import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.mark.exception.AlreadyRegisteredException;
 import com.mark.exception.BadLoginException;
 import com.mark.exception.DatabaseErrorException;
-
+import com.mark.util.LoggingInterface;
 import com.mark.beans.Registration;
 
 @Stateless
@@ -23,6 +24,9 @@ import com.mark.beans.Registration;
 @LocalBean
 @Named
 public class UserDAO implements DataAccessInterface<Registration> {
+	@Inject
+	LoggingInterface logging;
+	
 	private Connection con;
 	
 	public UserDAO() {
@@ -31,8 +35,10 @@ public class UserDAO implements DataAccessInterface<Registration> {
 	}
 	
 	public void makeConnection() {
+		logging.info("Entering UserDAO.makeConnection()");
 		System.out.println("In makeConnection()");
 		if (con == null) {
+			logging.info("Creating a connection to the mysql database");
 			// DB Connection Info
 			con = null;
 			System.out.println("Connection is null");
@@ -44,20 +50,21 @@ public class UserDAO implements DataAccessInterface<Registration> {
 				// Connect to database
 				con = DriverManager.getConnection(url, username, password);
 
-				System.out.println("Connection is made");
+				logging.info("Connection is made");
 			} catch (SQLException e) {
+				logging.severe("Connection failed with SQLException");
 				e.printStackTrace();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
+			logging.info("Exiting UserDAO.makeConnection()");
 		}
 	}
 	
 	@Override
 	public Registration findBy(Registration user) {
+		logging.info("Entering UserDAO.findBy()");
 		makeConnection();
-
-		System.out.println("In findByUser");
 		try {
 			// Query for # of rows with matching username and password
 			String query = "SELECT COUNT(*) AS COUNT FROM USERS WHERE USERNAME=? AND PASSWORD=?";
@@ -77,11 +84,13 @@ public class UserDAO implements DataAccessInterface<Registration> {
 			user.setPassword(rs.getString(2));
 			rs.close();
 			stmt.close();
+			logging.info("User " + user.getUsername() + " found");
 		} catch(SQLException e) {
-
+			logging.warning("Database failed with SQLException");
 			e.printStackTrace();
 			throw new DatabaseErrorException(e); // TODO maybe better error to give...
 		} catch (BadLoginException e) {
+			logging.warning("Failed Log in with a BadLoginException");
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
@@ -89,12 +98,16 @@ public class UserDAO implements DataAccessInterface<Registration> {
 			if (con != null) {
 				try {
 					con.close();
+					logging.info("Database connection closed");
 				} catch (SQLException e) {
+					logging.warning("Database failed with SQLException");
 					e.printStackTrace();
 					throw new DatabaseErrorException(e);
 				}
 			}
 		}
+
+		logging.info("Exiting UserDAO.findBy()");
 		return user;
 	}
 	

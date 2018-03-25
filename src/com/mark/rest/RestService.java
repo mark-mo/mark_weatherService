@@ -3,6 +3,7 @@ package com.mark.rest;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -16,6 +17,7 @@ import com.mark.beans.WeatherSensorModel;
 import com.mark.business.WeatherServiceInterface;
 import com.mark.exception.DatabaseErrorException;
 import com.mark.util.HtmlCode;
+import com.mark.util.LoggingInterface;
 
 /**
  * This class is REST Service that implements the REST API to support the
@@ -26,7 +28,9 @@ import com.mark.util.HtmlCode;
  */
 @Path("/weather")
 public class RestService {
-	// Logger logger = LoggerFactory.getLogger(RestService.class);
+	@Inject
+	LoggingInterface logging;
+	
 	@EJB
 	WeatherServiceInterface service;
 
@@ -40,7 +44,7 @@ public class RestService {
 	@Produces("application/json")
 	public String test() {
 		// Log the API call
-		// logger.info("Entering RestService.test()");
+		logging.info("Entering RestService.test");
 
 		// Return a Test Response
 		// ResponseModel response = new ResponseModel(0, "This is a test");
@@ -62,22 +66,19 @@ public class RestService {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public ResponseModel saveAccelSensorData(WeatherSensorModel model) {
-		System.out.println("In save");
 		model.setSensorName("Main");
 		// Log the API call
-		// logger.info("Entering RestService.save()");
-		// logger.debug("Model: " + model.toString());
+		logging.info("Entering RestService.saveAccelSensorData");
+		logging.debug("Model: " + model.toString());
 
 		// Send model to database
-
-		if (service.save(model)) {
-			// Return OK Response
-			ResponseModel response = new ResponseModel(HtmlCode.Success.getIdentifier(), "OK");
-			return response;
-		} else {
-			ResponseModel response = new ResponseModel(HtmlCode.BadRequest.getIdentifier(), "Bad Request");
-			return response;
-		}
+		boolean OK = service.save(model);
+		// Return OK Response
+		ResponseModel response = new ResponseModel(OK ? HtmlCode.Success.getIdentifier() : HtmlCode.BadRequest.getIdentifier(), 
+				OK ? "OK" : "Error");
+		logging.debug("Response: " + response.getMessage());
+		logging.info("Exiting RestService.saveAccelSensorData");
+		return response;
 	}
 
 	@GET
@@ -85,15 +86,19 @@ public class RestService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ResponseModel getReadings() {
 		ResponseModel response;
+		logging.info("Entering RestService.getReadings");
 
 		try {
 			List<WeatherSensorModel> readings = service.getReadings();
 			response = new ResponseDataModel<List<WeatherSensorModel>>(HtmlCode.Success.getIdentifier(), "OK",
 					readings);
+			logging.info("Response: " + response.getMessage());
 		} catch (DatabaseErrorException e) {
 			response = new ResponseModel(HtmlCode.BadRequest.getIdentifier(), "Error retrieving readings");
+			logging.severe(response.getMessage());
 		}
 
+		logging.info("Exiting RestService.getReadings");
 		return response;
 	}
 }
