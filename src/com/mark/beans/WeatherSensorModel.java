@@ -3,8 +3,13 @@ package com.mark.beans;
 import java.text.DateFormat;
 import java.util.Date;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+
 import com.mark.util.Month;
 
+@ManagedBean
+@ViewScoped
 public class WeatherSensorModel {
 	private String sensorName;
 	private double humidity;

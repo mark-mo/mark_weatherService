@@ -8,4 +8,6 @@ public interface LoggingInterface {
 	public void warning(String info);
 	
 	public void info(String info);
+	
+	public void trace(String info);
 }

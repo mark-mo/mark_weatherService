@@ -1,16 +1,13 @@
 package com.mark.beans;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@SuppressWarnings("deprecation")
 @XmlRootElement(name="Response")
 @XmlAccessorType(XmlAccessType.FIELD)
-@ManagedBean
-@ViewScoped
+@Named
 public class ResponseDataModel <T> extends ResponseModel {
 	private T data;
 	

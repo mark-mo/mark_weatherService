@@ -22,7 +22,6 @@ import com.mark.beans.Registration;
 @Stateless
 @Local(DataAccessInterface.class)
 @LocalBean
-@Named
 public class UserDAO implements DataAccessInterface<Registration> {
 	@Inject
 	LoggingInterface logging;

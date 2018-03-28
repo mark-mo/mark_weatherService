@@ -11,7 +11,6 @@ import javax.ejb.Local;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import com.mark.beans.Registration;
 
@@ -22,16 +21,16 @@ public class UserService implements UserServiceInterface {
 	@Inject
 	LoggingInterface logging;
 	
-	@EJB
-	@Named("userDAO")
-	DataAccessInterface<User> service;
+	@EJB(beanName="UserDAO")
+	DataAccessInterface<Registration> userDAO;
 	
 	public UserService() {
 	}
 	
 	public void login(User user) throws BadLoginException {
 		logging.info("Enter into UserService:login");
-		service.findBy(user);
+		Registration currentUser = new Registration(user);
+		userDAO.findBy(currentUser);
 		logging.info("Exit UserService:login");
 	}
 	
@@ -46,7 +45,7 @@ public class UserService implements UserServiceInterface {
 		}
 		
 		// Otherwise send to DAO for insert
-		service.create(registration);
+		userDAO.create(registration);
 		logging.info("Exit UserService:register");
 	}
 }

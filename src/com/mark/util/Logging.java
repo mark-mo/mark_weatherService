@@ -32,4 +32,9 @@ public class Logging implements LoggingInterface {
 		Date time = new Date();
 		System.out.println(time.getTime() + "[INFO] " + info);
 	}
+	
+	public void trace(String info) {
+		Date time = new Date();
+		System.out.println("******" + time.getTime() + "[TRACE] " + info);
+	}
 }

@@ -21,6 +21,11 @@ public class Registration extends User {
 		super(username, password);
 		this.passwordConfirm = passwordConfirm;
 	}
+	
+	public Registration(User user) {
+		super(user.getUsername(), user.getPassword());
+		passwordConfirm = user.getPassword();
+	}
 
 	public String getPasswordConfirm() {
 		return passwordConfirm;

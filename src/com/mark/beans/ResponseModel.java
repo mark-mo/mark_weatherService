@@ -1,14 +1,19 @@
 package com.mark.beans;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
-@SuppressWarnings("deprecation")
-@ManagedBean
+@Named
 @ViewScoped
 public class ResponseModel {
 	private int status;
 	private String message;
+	
+//	public ResponseModel() {
+//		status = -1;
+//		message = "";
+//	}
 	
 	public ResponseModel(int status, String message) {
 		this.status = status;

@@ -2,24 +2,28 @@ package com.mark.data;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Local;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.inject.Named;
+import javax.interceptor.Interceptors;
 
 import com.mark.beans.WeatherSensorModel;
 import com.mark.exception.DatabaseErrorException;
 
+import com.mark.util.LoggingInterceptor;
+
 @Stateless
+@Interceptors(LoggingInterceptor.class)
 @Local(DataAccessInterface.class)
 @LocalBean
-@Named
 public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
 	private Connection con;
 
@@ -35,6 +39,10 @@ public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
 			String url = "jdbc:mysql://172.30.79.95:3306/Weather";
 			String username = "weather";
 			String password = "weathPiProject361";
+			
+//			String url = "jdbc:mysql://localhost:3306/weather";
+//			String username = "root";
+//			String password = "root";
 
 			try {
 				// Connect to database
@@ -50,11 +58,20 @@ public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
 		makeConnection();
 
 		try {
+			// TODO: Change getTime() to SQL DATETIME
+			System.out.println("Time: " + Timestamp.valueOf(model.getTime()));
 			// Query for # of rows with matching username and password
-			String sql1 = String.format("INSERT INTO readings (HUMIDITY, PRESSURE, DATETIME) VALUES (%f, %f, '%s')",
-					model.getHumidity(), model.getPressure(), model.getTime());
-			Statement stmt1 = con.createStatement();
-			stmt1.executeUpdate(sql1);
+			String sql1 = "INSERT INTO readings (HUMIDITY, PRESSURE, CURRDATE) VALUES (?, ?, ?)";
+			PreparedStatement stmt1 = con.prepareStatement(sql1);
+			stmt1.setDouble(1, model.getHumidity());
+			stmt1.setDouble(2, model.getPressure());
+			stmt1.setTimestamp(3, Timestamp.valueOf(model.getTime()));
+			int rowsAffected = stmt1.executeUpdate();
+
+			// Throw DatabaseErrorException is rows affected is less than 1
+			if (rowsAffected < 1) {
+				throw new SQLException();
+			}
 			stmt1.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -83,10 +100,10 @@ public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
 			String sql1 = "SELECT * FROM readings";
 			Statement stmt1 = con.createStatement();
 			ResultSet rs1 = stmt1.executeQuery(sql1);
-			
+
 			while (rs1.next()) {
 				WeatherSensorModel weather = new WeatherSensorModel(rs1.getInt("HUMIDITY"), rs1.getInt("PRESSURE"),
-						rs1.getString("DATETIME"));
+						rs1.getTimestamp("CURRDATE").toString());
 
 				weatherList.add(weather);
 			}
