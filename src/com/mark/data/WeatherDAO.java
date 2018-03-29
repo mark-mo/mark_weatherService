@@ -102,8 +102,10 @@ public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
 			ResultSet rs1 = stmt1.executeQuery(sql1);
 
 			while (rs1.next()) {
+				String time = rs1.getTimestamp("CURRDATE").toString();
+				System.out.println("Retrieved Time: " + time);
 				WeatherSensorModel weather = new WeatherSensorModel(rs1.getInt("HUMIDITY"), rs1.getInt("PRESSURE"),
-						rs1.getTimestamp("CURRDATE").toString());
+						time);
 
 				weatherList.add(weather);
 			}
