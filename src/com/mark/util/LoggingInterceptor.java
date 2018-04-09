@@ -18,7 +18,7 @@ public class LoggingInterceptor implements Serializable {
 
 	@AroundInvoke
 	public Object methodInterceptor(InvocationContext ctx) throws Exception {
-		logging.trace("******************* Intercepting call to method: " + ctx.getTarget().getClass() + "."
+		logging.trace("Intercepting call to method: " + ctx.getTarget().getClass() + "."
 				+ ctx.getMethod().getName() + "()");
 		return ctx.proceed();
 	}

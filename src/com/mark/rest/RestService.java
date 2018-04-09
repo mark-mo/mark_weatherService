@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
+import javax.interceptor.Interceptors;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -17,6 +18,7 @@ import com.mark.beans.WeatherSensorModel;
 import com.mark.business.WeatherServiceInterface;
 import com.mark.exception.DatabaseErrorException;
 import com.mark.util.HtmlCode;
+import com.mark.util.LoggingInterceptor;
 import com.mark.util.LoggingInterface;
 
 /**
@@ -26,6 +28,7 @@ import com.mark.util.LoggingInterface;
  * @author markreha
  * @version $Revision$
  */
+@Interceptors(LoggingInterceptor.class)
 @Path("/weather")
 public class RestService {
 	@Inject
@@ -68,7 +71,6 @@ public class RestService {
 	public ResponseModel saveAccelSensorData(WeatherSensorModel model) {
 		model.setSensorName("Main");
 		// Log the API call
-		logging.info("Entering RestService.saveAccelSensorData");
 		logging.debug("Model: " + model.toString());
 
 		// Send model to database

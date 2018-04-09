@@ -15,26 +15,26 @@ public class Logging implements LoggingInterface {
 	
 	public void debug(String info) {
 		Date time = new Date();
-		System.out.println(time.getTime() + "[DEBUG] " + info);
+		System.out.println(time.toString() + " [DEBUG] " + info);
 	}
 	
 	public void severe(String info) {
 		Date time = new Date();
-		System.out.println(time.getTime() + "[SEVERE] " + info);
+		System.out.println(time.toString() + " [SEVERE] " + info);
 	}
 	
 	public void warning(String info) {
 		Date time = new Date();
-		System.out.println(time.getTime() + "[WARNING] " + info);
+		System.out.println(time.getTime() + " [WARNING] " + info);
 	}
 	
 	public void info(String info) {
 		Date time = new Date();
-		System.out.println(time.getTime() + "[INFO] " + info);
+		System.out.println(time.toString() + " [INFO] " + info);
 	}
 	
 	public void trace(String info) {
 		Date time = new Date();
-		System.out.println("******" + time.getTime() + "[TRACE] " + info);
+		System.out.println("******" + time.toString() + " [TRACE] " + info);
 	}
 }

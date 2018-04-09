@@ -19,6 +19,7 @@ import com.mark.beans.WeatherSensorModel;
 import com.mark.exception.DatabaseErrorException;
 
 import com.mark.util.LoggingInterceptor;
+import com.mark.util.WeatherSensorFactory;
 
 @Stateless
 @Interceptors(LoggingInterceptor.class)
@@ -104,7 +105,7 @@ public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
 			while (rs1.next()) {
 				String time = rs1.getTimestamp("CURRDATE").toString();
 				System.out.println("Retrieved Time: " + time);
-				WeatherSensorModel weather = new WeatherSensorModel(rs1.getInt("HUMIDITY"), rs1.getInt("PRESSURE"),
+				WeatherSensorModel weather = WeatherSensorFactory.getWeather(rs1.getInt("HUMIDITY"), rs1.getInt("PRESSURE"),
 						time);
 
 				weatherList.add(weather);

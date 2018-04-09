@@ -4,6 +4,7 @@ import com.mark.beans.User;
 import com.mark.data.DataAccessInterface;
 import com.mark.exception.BadLoginException;
 import com.mark.exception.PasswordMismatchException;
+import com.mark.util.LoggingInterceptor;
 import com.mark.util.LoggingInterface;
 
 import javax.ejb.EJB;
@@ -11,10 +12,12 @@ import javax.ejb.Local;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.interceptor.Interceptors;
 
 import com.mark.beans.Registration;
 
 @Stateless
+@Interceptors(LoggingInterceptor.class)
 @Local(UserServiceInterface.class)
 @LocalBean
 public class UserService implements UserServiceInterface {
