@@ -98,7 +98,7 @@ public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
 		List<WeatherSensorModel> weatherList = new ArrayList<WeatherSensorModel>();
 
 		try {
-			String sql1 = "SELECT * FROM readings";
+			String sql1 = "SELECT * FROM readings ORDER BY ID DESC LIMIT 10";
 			Statement stmt1 = con.createStatement();
 			ResultSet rs1 = stmt1.executeQuery(sql1);
 
