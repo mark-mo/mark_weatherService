@@ -68,7 +68,6 @@ public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
 
 	@Override
 	public boolean create(WeatherSensorModel model) {
-		logging.info("Entering WeatherDAO.create()");
 		logging.info("Model info: Humidity " + model.getHumidity() + 
 				" Pressure " + model.getHumidity() + 
 				" Time " + model.getTime());
@@ -76,8 +75,8 @@ public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
 		makeConnection();
 
 		try {
-			// TODO: Change getTime() to SQL DATETIME
-			System.out.println("Time: " + Timestamp.valueOf(model.getTime()));
+			model = WeatherSensorFactory.getWeather(model.getHumidity(), model.getPressure());
+			logging.info("Time: " + Timestamp.valueOf(model.getTime()));
 			// Query for # of rows with matching username and password
 			String sql1 = "INSERT INTO readings (HUMIDITY, PRESSURE, CURRDATE) VALUES (?, ?, ?)";
 			PreparedStatement stmt1 = con.prepareStatement(sql1);
