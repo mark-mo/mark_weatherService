@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 
 import com.mark.beans.ResponseDataModel;
 import com.mark.beans.ResponseModel;
-import com.mark.beans.WeatherSensorModel;
+import com.mark.beans.SensorModel;
 import com.mark.business.WeatherServiceInterface;
 import com.mark.exception.DatabaseErrorException;
 import com.mark.util.HtmlCode;
@@ -68,7 +68,7 @@ public class RestService {
 	@Path("/save")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public ResponseModel saveAccelSensorData(WeatherSensorModel model) {
+	public ResponseModel saveAccelSensorData(SensorModel model) {
 		model.setSensorName("Main");
 		// Log the API call
 		logging.debug("Model: " + model.toString());
@@ -91,8 +91,8 @@ public class RestService {
 		logging.info("Entering RestService.getReadings");
 
 		try {
-			List<WeatherSensorModel> readings = service.getReadings();
-			response = new ResponseDataModel<List<WeatherSensorModel>>(HtmlCode.Success.getIdentifier(), "OK",
+			List<SensorModel> readings = service.getReadings();
+			response = new ResponseDataModel<List<SensorModel>>(HtmlCode.Success.getIdentifier(), "OK",
 					readings);
 			logging.info("Response: " + response.getMessage());
 		} catch (DatabaseErrorException e) {

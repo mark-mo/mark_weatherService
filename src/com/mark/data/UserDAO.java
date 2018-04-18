@@ -25,21 +25,20 @@ import com.mark.beans.Registration;
 public class UserDAO implements DataAccessInterface<Registration> {
 	@Inject
 	LoggingInterface logging;
-	
+
 	private Connection con;
-	
+
 	public UserDAO() {
 		// null at first, to be set later
 		con = null;
 	}
-	
+
 	public void makeConnection() {
 		logging.info("Entering UserDAO.makeConnection()");
 		System.out.println("In makeConnection()");
+		logging.info("Creating a connection to the mysql database");
+		// DB Connection Info
 		if (con == null) {
-			logging.info("Creating a connection to the mysql database");
-			// DB Connection Info
-			con = null;
 			System.out.println("Connection is null");
 			String url = "jdbc:mysql://172.30.79.95:3306/Weather";
 			String username = "weather";
@@ -56,10 +55,10 @@ public class UserDAO implements DataAccessInterface<Registration> {
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-			logging.info("Exiting UserDAO.makeConnection()");
 		}
+		logging.info("Exiting UserDAO.makeConnection()");
 	}
-	
+
 	@Override
 	public Registration findBy(Registration user) {
 		logging.info("Entering UserDAO.findBy()");
@@ -70,7 +69,7 @@ public class UserDAO implements DataAccessInterface<Registration> {
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setString(1, user.getUsername());
 			stmt.setString(2, user.getPassword());
-	
+
 			// Execute query and get COUNT from results
 			ResultSet rs = stmt.executeQuery();
 			if (!rs.next()) {
@@ -84,7 +83,7 @@ public class UserDAO implements DataAccessInterface<Registration> {
 			rs.close();
 			stmt.close();
 			logging.info("User " + user.getUsername() + " found");
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			logging.warning("Database failed with SQLException");
 			e.printStackTrace();
 			throw new DatabaseErrorException(e); // TODO maybe better error to give...
@@ -97,6 +96,7 @@ public class UserDAO implements DataAccessInterface<Registration> {
 			if (con != null) {
 				try {
 					con.close();
+					con = null;
 					logging.info("Database connection closed");
 				} catch (SQLException e) {
 					logging.warning("Database failed with SQLException");
@@ -109,48 +109,47 @@ public class UserDAO implements DataAccessInterface<Registration> {
 		logging.info("Exiting UserDAO.findBy()");
 		return user;
 	}
-	
+
 	public boolean create(Registration user) {
 		makeConnection();
-		
+
 		try {
 			// Query for any rows with same username
 			String query = "SELECT COUNT(*) AS COUNT FROM USERS WHERE USERNAME=?";
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setString(1, user.getUsername());
-	
+
 			// Execute query and get COUNT from results
 			ResultSet rs = stmt.executeQuery();
 			rs.next();
 			int count = rs.getInt("COUNT");
-			
+
 			// Throw AlreadyRegisteredException if count is more than 0
 			if (count > 0) {
 				throw new AlreadyRegisteredException();
 			}
 			rs.close();
-			
+
 			// Otherwise, add to USERS
 			query = "INSERT INTO USERS (USERNAME, PASSWORD) VALUES (?,?);";
 			stmt = con.prepareStatement(query);
 			stmt.setString(1, user.getUsername());
 			stmt.setString(2, user.getPassword());
 			int rowsAffected = stmt.executeUpdate();
-			
+
 			// Throw DatabaseErrorException is rows affected is less than 1
 			if (rowsAffected < 1) {
 				throw new SQLException();
 			}
 			stmt.close();
-		}
-		catch(SQLException e) {
+		} catch (SQLException e) {
 			throw new DatabaseErrorException(e); // TODO maybe better error to give...
-		}
-		finally {
+		} finally {
 			// Cleanup Database
 			if (con != null) {
 				try {
 					con.close();
+					con = null;
 				} catch (SQLException e) {
 					e.printStackTrace();
 					throw new DatabaseErrorException(e);

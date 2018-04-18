@@ -16,7 +16,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.interceptor.Interceptors;
 
-import com.mark.beans.WeatherSensorModel;
+import com.mark.beans.SensorModel;
 import com.mark.exception.DatabaseErrorException;
 
 import com.mark.util.LoggingInterceptor;
@@ -27,9 +27,9 @@ import com.mark.util.WeatherSensorFactory;
 @Interceptors(LoggingInterceptor.class)
 @Local(DataAccessInterface.class)
 @LocalBean
-public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
+public class WeatherDAO implements DataAccessInterface<SensorModel> {
 	private Connection con;
-	
+
 	@Inject
 	LoggingInterface logging;
 
@@ -41,18 +41,17 @@ public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
 	public void makeConnection() {
 		logging.info("Entering WeatherDAO.makeConnection()");
 
+		logging.info("Creating a connection to the mysql database");
+
+		// DB Connection Info
 		if (con == null) {
-			logging.info("Creating a connection to the mysql database");
-			
-			// DB Connection Info
-			con = null;
-			String url = "jdbc:mysql://172.30.79.95:3306/Weather";
-			String username = "weather";
-			String password = "weathPiProject361";
-			
-//			String url = "jdbc:mysql://localhost:3306/weather";
-//			String username = "root";
-//			String password = "root";
+			// String url = "jdbc:mysql://172.30.79.95:3306/Weather";
+			// String username = "weather";
+			// String password = "weathPiProject361";
+
+			String url = "jdbc:mysql://localhost:3306/weather";
+			String username = "root";
+			String password = "root";
 
 			try {
 				// Connect to database
@@ -67,21 +66,20 @@ public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
 	}
 
 	@Override
-	public boolean create(WeatherSensorModel model) {
-		logging.info("Model info: Humidity " + model.getHumidity() + 
-				" Pressure " + model.getHumidity() + 
-				" Time " + model.getTime());
-		
+	public boolean create(SensorModel model) {
+		logging.info("Model info: Humidity " + model.getFirstAtt() + " Pressure " + model.getSecondAtt() + " Time "
+				+ model.getTime());
+
 		makeConnection();
 
 		try {
-			model = WeatherSensorFactory.getWeather(model.getHumidity(), model.getPressure());
+			model = (SensorModel) WeatherSensorFactory.getWeather(model.getFirstAtt(), model.getSecondAtt());
 			logging.info("Time: " + Timestamp.valueOf(model.getTime()));
 			// Query for # of rows with matching username and password
 			String sql1 = "INSERT INTO readings (HUMIDITY, PRESSURE, CURRDATE) VALUES (?, ?, ?)";
 			PreparedStatement stmt1 = con.prepareStatement(sql1);
-			stmt1.setDouble(1, model.getHumidity());
-			stmt1.setDouble(2, model.getPressure());
+			stmt1.setDouble(1, model.getFirstAtt());
+			stmt1.setDouble(2, model.getSecondAtt());
 			stmt1.setTimestamp(3, Timestamp.valueOf(model.getTime()));
 			int rowsAffected = stmt1.executeUpdate();
 
@@ -90,7 +88,7 @@ public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
 				logging.severe("Database error: <1 rows were updated, model not added to database.");
 				throw new SQLException();
 			}
-			
+
 			logging.info("The model was successfully inserted.");
 			stmt1.close();
 		} catch (SQLException e) {
@@ -103,6 +101,7 @@ public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
 			if (con != null) {
 				try {
 					con.close();
+					con = null;
 				} catch (SQLException e) {
 					e.printStackTrace();
 					throw new DatabaseErrorException(e);
@@ -114,11 +113,11 @@ public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
 
 	// Finds past 10 entries
 	@Override
-	public List<WeatherSensorModel> findAll() {
+	public List<SensorModel> findAll() {
 		logging.info("Entering WeatherDAO.findAll()");
-		
+
 		makeConnection();
-		List<WeatherSensorModel> weatherList = new ArrayList<WeatherSensorModel>();
+		List<SensorModel> weatherList = new ArrayList<SensorModel>();
 
 		try {
 			String sql1 = "SELECT * FROM readings ORDER BY ID DESC LIMIT 10";
@@ -128,12 +127,11 @@ public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
 			while (rs1.next()) {
 				String time = rs1.getTimestamp("CURRDATE").toString();
 				System.out.println("Retrieved Time: " + time);
-				WeatherSensorModel weather = WeatherSensorFactory.getWeather(rs1.getInt("HUMIDITY"), rs1.getInt("PRESSURE"),
-						time);
-				
-				logging.info("Adding model: Humidity " + weather.getHumidity() + 
-						" Pressure " + weather.getHumidity() + 
-						" Time " + weather.getTime());
+				SensorModel weather = (SensorModel) WeatherSensorFactory.getWeather(rs1.getInt("HUMIDITY"),
+						rs1.getInt("PRESSURE"), time);
+
+				logging.info("Adding model: Humidity " + weather.getFirstAtt() + " Pressure " + weather.getSecondAtt()
+						+ " Time " + weather.getTime());
 
 				weatherList.add(weather);
 			}
@@ -149,6 +147,7 @@ public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
 			if (con != null) {
 				try {
 					con.close();
+					con = null;
 				} catch (SQLException e) {
 					e.printStackTrace();
 					throw new DatabaseErrorException(e);
@@ -159,25 +158,25 @@ public class WeatherDAO implements DataAccessInterface<WeatherSensorModel> {
 	}
 
 	@Override
-	public WeatherSensorModel findByID(int id) {
+	public SensorModel findByID(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public WeatherSensorModel findBy(WeatherSensorModel t) {
+	public SensorModel findBy(SensorModel t) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean update(WeatherSensorModel t) {
+	public boolean update(SensorModel t) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean delete(WeatherSensorModel t) {
+	public boolean delete(SensorModel t) {
 		// TODO Auto-generated method stub
 		return false;
 	}

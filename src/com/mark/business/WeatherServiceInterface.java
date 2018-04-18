@@ -2,10 +2,10 @@ package com.mark.business;
 
 import java.util.List;
 
-import com.mark.beans.WeatherSensorModel;
+import com.mark.beans.SensorModel;
 
 public interface WeatherServiceInterface {
-	public boolean save(WeatherSensorModel model);
+	public boolean save(SensorModel model);
 	
-	public List<WeatherSensorModel> getReadings();
+	public List<SensorModel> getReadings();
 }

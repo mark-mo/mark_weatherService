@@ -66,11 +66,11 @@
 			for (let reading of data.data) {
 				// Push time and humidity to humidity line graph
 				humidityTrace.x.push(reading.time)
-				humidityTrace.y.push(reading.humidity)
+				humidityTrace.y.push(reading.firstAtt)
 				
 				// Push time and pressure to pressure line graph
 				pressureTrace.x.push(reading.time)
-				pressureTrace.y.push(reading.pressure)
+				pressureTrace.y.push(reading.secondAtt)
 			}
 			
 			plot()
@@ -84,7 +84,7 @@
 		// Make AJAX call with provided link
 		function sendRequest() {
 			$.ajax({
-				url: 'http://weather-weather-pi.193b.starter-ca-central-1.openshiftapps.com/WeatherApp/rest/weather/readings',
+				url: 'http://localhost:8080/WeatherApp/rest/weather/readings',
 				crossDomain: true,
 				type: 'GET',
 				success: responseSuccess,

@@ -7,7 +7,8 @@ import java.util.HashMap;
 import javax.inject.Inject;
 import javax.interceptor.Interceptors;
 
-import com.mark.beans.WeatherSensorModel;
+import com.mark.beans.SensorInterface;
+import com.mark.beans.SensorModel;
 
 @Interceptors(LoggingInterceptor.class)
 public class WeatherSensorFactory {
@@ -15,20 +16,21 @@ public class WeatherSensorFactory {
 	LoggingInterface logging;
 	
 	static TimeHelper timeHelper;
+	
 
-	private static final HashMap<String, WeatherSensorModel> weatherMap = new HashMap<String, WeatherSensorModel>();
+	private static final HashMap<String, SensorInterface> weatherMap = new HashMap<String, SensorInterface>();
 
 	// For creating brand new weather models, sets time to current time
-	public static WeatherSensorModel getWeather(double humidity, double pressure) {
+	public static SensorInterface getWeather(double humidity, double pressure) {
 
-		WeatherSensorModel weather = (WeatherSensorModel) weatherMap.get(humidity + "," + pressure);
+		SensorInterface weather = (SensorInterface) weatherMap.get(humidity + "," + pressure);
 		
 		if(timeHelper == null) {
 			timeHelper = new TimeHelper();
 		}
 
 		if (weather == null) {
-			weather = new WeatherSensorModel(humidity, pressure);
+			weather = new SensorModel(humidity, pressure);
 
 			Date date = new Date();
 			String time = DateFormat.getDateInstance().format(date);
@@ -42,17 +44,16 @@ public class WeatherSensorFactory {
 		return weather;
 	}
 
-	// For creating older weather models, sets time to the time that was stored in
-	// the database
-	public static WeatherSensorModel getWeather(double humidity, double pressure, String time) {
-		WeatherSensorModel weather = (WeatherSensorModel) weatherMap.get(humidity + "," + pressure);
+	// For creating older weather models, sets time to the time that was stored in the database
+	public static SensorInterface getWeather(double humidity, double pressure, String time) {
+		SensorInterface weather = (SensorInterface) weatherMap.get(humidity + "," + pressure);
 
 		if(timeHelper == null) {
 			timeHelper = new TimeHelper();
 		}
 		
 		if (weather == null) {
-			weather = new WeatherSensorModel(humidity, pressure, time);
+			weather = new SensorModel(humidity, pressure, time);
 
 			weather.setTime(time);
 			weatherMap.put(humidity + "," + pressure, weather);
