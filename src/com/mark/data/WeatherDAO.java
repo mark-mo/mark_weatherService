@@ -45,13 +45,13 @@ public class WeatherDAO implements DataAccessInterface<SensorModel> {
 
 		// DB Connection Info
 		if (con == null) {
-			// String url = "jdbc:mysql://172.30.79.95:3306/Weather";
-			// String username = "weather";
-			// String password = "weathPiProject361";
+			 String url = "jdbc:mysql://172.30.79.95:3306/Weather";
+			 String username = "weather";
+			 String password = "weathPiProject361";
 
-			String url = "jdbc:mysql://localhost:3306/weather";
-			String username = "root";
-			String password = "root";
+//			String url = "jdbc:mysql://localhost:3306/weather";
+//			String username = "root";
+//			String password = "root";
 
 			try {
 				// Connect to database
