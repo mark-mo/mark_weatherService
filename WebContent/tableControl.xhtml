@@ -6,10 +6,13 @@
 
 <h:head></h:head> 
 <body> 
-<select>
-  <option value="table">table</option>
-  <option value="graph">graph</option>
-</select>
+<h:selectOneMenu value="#{reportModel.type}">
+   <f:selectItem itemValue="table" itemLabel="Table" />
+   <f:selectItem itemValue="graph" itemLabel="Graph" />                   
+</h:selectOneMenu>
+<h:form>
+    Amount: <h:inputText id="amount" value="#{reportModel.amount}" title="" /><h:message for="amount" /><br/>
     <h:commandButton value="Find" action="#{reportController.onReport}" />
+  </h:form>
 </body> 
 </html>

@@ -74,7 +74,7 @@
 		// Make AJAX call with provided link
 		function sendRequest() {
 			$.ajax({
-				url: 'http://weather-weather.193b.starter-ca-central-1.openshiftapps.com/WeatherApp/rest/weather/readings',
+				url: 'http://weather-weather.193b.starter-ca-central-1.openshiftapps.com/WeatherApp/rest/weather/readings' + #{report.amount},
 				crossDomain: true,
 				type: 'GET',
 				success: responseSuccess,

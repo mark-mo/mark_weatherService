@@ -8,10 +8,10 @@ import com.mark.beans.ReportModel;
 @ManagedBean
 @ViewScoped
 public class ReportController {
-	public String getReport() {
+	public String onReport() {
 		// Get the User model from POST
 		FacesContext context = FacesContext.getCurrentInstance();
-		ReportModel report = context.getApplication().evaluateExpressionGet(context, "#{report}", ReportModel.class);
+		ReportModel report = context.getApplication().evaluateExpressionGet(context, "#{reportModel}", ReportModel.class);
 
 		FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("report", report);
 		if(report.getType().equals("table")) {
