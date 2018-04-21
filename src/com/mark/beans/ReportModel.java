@@ -1,5 +1,7 @@
 package com.mark.beans;
 
+@ManagedBean
+@ViewScoped
 public class ReportModel {
 	private String type;
 	private int amount;
