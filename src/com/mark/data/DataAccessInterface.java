@@ -4,6 +4,7 @@ import java.util.List;
 
 public interface DataAccessInterface <T> {
 	public List<T> findAll();
+	public List<T> findSelect(int amount);
 	public T findByID(int id);
 	public T findBy(T t);
 	public boolean create(T album);

@@ -1,5 +1,6 @@
 package com.mark.business;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -25,7 +26,17 @@ public class WeatherService {
 		return weatherDAO.create(model);
 	}
 
-	public List<SensorModel> getReadings() {
-		return weatherDAO.findAll();
+	public List<SensorModel> getReadings(int amount) {
+		return reverseReadings(weatherDAO.findSelect(amount));
+	}
+	
+	private List<SensorModel> reverseReadings(List<SensorModel> list) {
+		List<SensorModel> corrected = new ArrayList<SensorModel>();
+		
+		for(int i = list.size() - 1; i > -1; i--) {
+			corrected.add(list.get(i));
+		}
+		
+		return corrected;
 	}
 }

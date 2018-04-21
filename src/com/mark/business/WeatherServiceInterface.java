@@ -7,5 +7,5 @@ import com.mark.beans.SensorModel;
 public interface WeatherServiceInterface {
 	public boolean save(SensorModel model);
 	
-	public List<SensorModel> getReadings();
+	public List<SensorModel> getReadings(int amount);
 }

@@ -182,4 +182,10 @@ public class UserDAO implements DataAccessInterface<Registration> {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public List<Registration> findSelect(int amount) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

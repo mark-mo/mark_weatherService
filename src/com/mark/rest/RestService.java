@@ -9,6 +9,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -84,14 +85,14 @@ public class RestService {
 	}
 
 	@GET
-	@Path("/readings")
+	@Path("/readings/{amount}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ResponseModel getReadings() {
+	public ResponseModel getReadings(@PathParam("amount") int amount) {
 		ResponseModel response;
 		logging.info("Entering RestService.getReadings");
 
 		try {
-			List<SensorModel> readings = service.getReadings();
+			List<SensorModel> readings = service.getReadings(amount);
 			response = new ResponseDataModel<List<SensorModel>>(HtmlCode.Success.getIdentifier(), "OK",
 					readings);
 			logging.info("Response: " + response.getMessage());

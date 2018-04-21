@@ -45,13 +45,13 @@ public class WeatherDAO implements DataAccessInterface<SensorModel> {
 
 		// DB Connection Info
 		if (con == null) {
-			 String url = "jdbc:mysql://172.30.79.95:3306/Weather";
-			 String username = "weather";
-			 String password = "weathPiProject361";
+//			 String url = "jdbc:mysql://172.30.196.169:3306/Weather";
+//			 String username = "weather";
+//			 String password = "weathPiProject361";
 
-//			String url = "jdbc:mysql://localhost:3306/weather";
-//			String username = "root";
-//			String password = "root";
+			String url = "jdbc:mysql://localhost:3306/weather";
+			String username = "root";
+			String password = "root";
 
 			try {
 				// Connect to database
@@ -179,5 +179,48 @@ public class WeatherDAO implements DataAccessInterface<SensorModel> {
 	public boolean delete(SensorModel t) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public List<SensorModel> findSelect(int amount) {
+		makeConnection();
+		List<SensorModel> weatherList = new ArrayList<SensorModel>();
+
+		try {
+			String sql1 = "SELECT * FROM readings ORDER BY ID DESC LIMIT " + amount;
+			Statement stmt1 = con.createStatement();
+			ResultSet rs1 = stmt1.executeQuery(sql1);
+
+			while (rs1.next()) {
+				String time = rs1.getTimestamp("CURRDATE").toString();
+				System.out.println("Retrieved Time: " + time);
+				SensorModel weather = (SensorModel) WeatherSensorFactory.getWeather(rs1.getInt("HUMIDITY"),
+						rs1.getInt("PRESSURE"), time);
+
+				logging.info("Adding model: Humidity " + weather.getFirstAtt() + " Pressure " + weather.getSecondAtt()
+						+ " Time " + weather.getTime());
+
+				weatherList.add(weather);
+			}
+			rs1.close();
+			stmt1.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			logging.severe("A SQLException error was thrown, model not added to database");
+			throw new DatabaseErrorException(e);
+		} finally {
+			logging.info("Closing database connection.");
+			// Cleanup Database
+			if (con != null) {
+				try {
+					con.close();
+					con = null;
+				} catch (SQLException e) {
+					e.printStackTrace();
+					throw new DatabaseErrorException(e);
+				}
+			}
+		}
+		return weatherList;
 	}
 }
