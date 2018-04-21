@@ -1,5 +1,6 @@
 package com.mark.controller;
 
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -9,9 +10,8 @@ import com.mark.beans.ReportModel;
 import com.mark.beans.User;
 import com.mark.util.LoggingInterceptor;
 
-@Interceptors({ LoggingInterceptor.class })
+@ManagedBean
 @ViewScoped
-@Named
 public class ReportController {
 	public String getReport() {
 		// Get the User model from POST
