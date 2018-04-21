@@ -1,6 +1,9 @@
 package com.mark.beans;
 
-@ManagedBean
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+
+@Named
 @ViewScoped
 public class ReportModel {
 	private String type;
