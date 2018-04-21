@@ -2,13 +2,8 @@ package com.mark.controller;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
-import javax.interceptor.Interceptors;
-
+import javax.faces.bean.ViewScoped;
 import com.mark.beans.ReportModel;
-import com.mark.beans.User;
-import com.mark.util.LoggingInterceptor;
 
 @ManagedBean
 @ViewScoped
