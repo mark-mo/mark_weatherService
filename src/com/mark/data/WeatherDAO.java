@@ -127,8 +127,8 @@ public class WeatherDAO implements DataAccessInterface<SensorModel> {
 			while (rs1.next()) {
 				String time = rs1.getTimestamp("CURRDATE").toString();
 				System.out.println("Retrieved Time: " + time);
-				SensorModel weather = (SensorModel) WeatherSensorFactory.getWeather(rs1.getInt("HUMIDITY"),
-						rs1.getInt("PRESSURE"), time);
+				SensorModel weather = (SensorModel) WeatherSensorFactory.getWeather(rs1.getDouble("HUMIDITY"),
+						rs1.getDouble("PRESSURE"), time);
 
 				logging.info("Adding model: Humidity " + weather.getFirstAtt() + " Pressure " + weather.getSecondAtt()
 						+ " Time " + weather.getTime());
@@ -194,8 +194,8 @@ public class WeatherDAO implements DataAccessInterface<SensorModel> {
 			while (rs1.next()) {
 				String time = rs1.getTimestamp("CURRDATE").toString();
 				System.out.println("Retrieved Time: " + time);
-				SensorModel weather = (SensorModel) WeatherSensorFactory.getWeather(rs1.getInt("HUMIDITY"),
-						rs1.getInt("PRESSURE"), time);
+				SensorModel weather = (SensorModel) WeatherSensorFactory.getWeather(rs1.getDouble("HUMIDITY"),
+						rs1.getDouble("PRESSURE"), time);
 
 				logging.info("Adding model: Humidity " + weather.getFirstAtt() + " Pressure " + weather.getSecondAtt()
 						+ " Time " + weather.getTime());
