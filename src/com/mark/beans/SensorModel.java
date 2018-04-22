@@ -42,7 +42,7 @@ public class SensorModel implements SensorInterface {
 		return firstAtt;
 	}
 
-	public void setFirstAtt(int firstAtt) {
+	public void setFirstAtt(double firstAtt) {
 		this.firstAtt = firstAtt;
 	}
 
@@ -50,7 +50,7 @@ public class SensorModel implements SensorInterface {
 		return secondAtt;
 	}
 
-	public void setSecondAtt(int secondAtt) {
+	public void setSecondAtt(double secondAtt) {
 		this.secondAtt = secondAtt;
 	}
 

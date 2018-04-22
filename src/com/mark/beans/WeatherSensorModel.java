@@ -40,7 +40,7 @@ public class WeatherSensorModel {
 		return humidity;
 	}
 
-	public void setHumidity(int humidity) {
+	public void setHumidity(double humidity) {
 		this.humidity = humidity;
 	}
 
@@ -48,7 +48,7 @@ public class WeatherSensorModel {
 		return pressure;
 	}
 
-	public void setPressure(int pressure) {
+	public void setPressure(double pressure) {
 		this.pressure = pressure;
 	}
 
