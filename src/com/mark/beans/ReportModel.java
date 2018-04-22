@@ -17,7 +17,7 @@ public class ReportModel implements Serializable {
 	
 	public ReportModel() {
 		reportType = "";
-		amount = 0;
+		amount = 10;
 	}
 	
 	public ReportModel(String reportType, int amount) {
