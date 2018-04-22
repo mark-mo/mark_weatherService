@@ -14,11 +14,11 @@ public class ReportController {
 		ReportModel report = context.getApplication().evaluateExpressionGet(context, "#{reportModel}", ReportModel.class);
 
 		FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("report", report);
-		if(report.getReportType().equals("table")) {
-			return "table.xhmtl";
+		if (report.getReportType().equals("table")) {
+			return "table.xhtml";
 		}
-		else if(report.getReportType().equals("report")) {
-			return "report.xhmtl";
+		else if (report.getReportType().equals("graph")) {
+			return "graph.xhtml";
 		}
 		return "table.xhtml";
 	}
