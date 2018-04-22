@@ -12,25 +12,25 @@ public class ReportModel implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String type;
+	private String reportType;
 	private int amount;
 	
 	public ReportModel() {
-		type = "";
+		reportType = "";
 		amount = 0;
 	}
 	
-	public ReportModel(String type, int amount) {
-		this.type = type;
+	public ReportModel(String reportType, int amount) {
+		this.reportType = reportType;
 		this.amount = amount;
 	}
 
-	public String getType() {
-		return type;
+	public String getReportType() {
+		return reportType;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setReportType(String reportType) {
+		this.reportType = reportType;
 	}
 
 	public int getAmount() {

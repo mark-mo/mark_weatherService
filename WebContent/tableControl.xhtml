@@ -1,18 +1,21 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"> 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
 
-<h:head></h:head> 
-<body> 
-<h:selectOneMenu value="#{reportModel.type}">
-   <f:selectItem itemValue="table" itemLabel="Table" />
-   <f:selectItem itemValue="graph" itemLabel="Graph" />                   
-</h:selectOneMenu>
-<h:form>
-    Amount: <h:inputText id="amount" value="#{reportModel.amount}" title="" /><h:message for="amount" /><br/>
-    <h:commandButton value="Find" action="#{reportController.onReport}" />
-  </h:form>
-</body> 
+<h:head></h:head>
+<body>
+	<h:form>
+		<h:selectOneMenu value="#{reportModel.reportType}">
+			<f:selectItem itemValue="table" itemLabel="Table" />
+			<f:selectItem itemValue="graph" itemLabel="Graph" />
+		</h:selectOneMenu>
+    Amount: <h:inputText id="amount" value="#{reportModel.amount}"
+			title="" />
+		<h:message for="amount" />
+		<br />
+		<h:commandButton value="Find" action="#{reportController.onReport}" />
+	</h:form>
+</body>
 </html>
