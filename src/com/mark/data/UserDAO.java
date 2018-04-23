@@ -40,7 +40,7 @@ public class UserDAO implements DataAccessInterface<Registration> {
 		// DB Connection Info
 		if (con == null) {
 			System.out.println("Connection is null");
-			String url = "jdbc:mysql://172.30.79.95:3306/Weather";
+			String url = "jdbc:mysql://172.30.196.169:3306/Weather";
 			String username = "weather";
 			String password = "weathPiProject361";
 
