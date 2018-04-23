@@ -69,7 +69,7 @@ public class RestService {
 	@Path("/save")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public ResponseModel saveAccelSensorData(SensorModel model) {
+	public ResponseModel saveSensorData(SensorModel model) {
 		model.setSensorName("Main");
 		// Log the API call
 		logging.debug("Model: " + model.toString());
