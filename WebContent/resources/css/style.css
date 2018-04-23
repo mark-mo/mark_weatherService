@@ -1,0 +1,139 @@
+* {
+	color: #303030;
+	box-sizing: border-box;
+}
+
+html {
+	background: url('../img/background.jpg') no-repeat center center fixed;
+	background-size: cover;
+}
+
+body {
+	margin: 0;
+}
+
+#page {
+	width: 100%;
+	min-width: 620px;
+	max-width: 1400px;
+	margin: 0 auto;
+	padding: 40px;
+}
+
+#navbar {
+	position: relative;
+}
+
+#title {
+	display: inline-block;
+	padding: 12px 50px;
+
+	font-family: 'GTWalsheimProLight';
+	font-size: 22px;
+	text-align: center;
+
+	background: #303030;
+	color: white;
+}
+
+#navlinks {
+	display: inline-block;
+	position: absolute;
+	right: 0;
+	bottom: 12px;
+
+	font-family: 'GTWalsheimProMedium';
+	text-align: right;
+}
+
+	#navlinks a {
+		padding-left: 10px;
+		text-decoration: none;
+	}
+
+		#navlinks a:hover {
+			text-decoration: underline;
+		}
+
+#content {
+	padding: 40px;
+	background: white;
+}
+
+.pagenav {
+	font-family: 'GTWalsheimProLight';
+	font-size: 22px;
+	margin-bottom: 30px;
+}
+
+.welcome {
+	text-align: center;
+	font-family: 'GTWalsheimProLight';
+	font-size: 22px;
+}
+
+form {
+	font-family: 'GTWalsheimProLight';
+	font-size: 18px;
+}
+
+select {
+	border: 1px solid #eee;
+	font-size: 14px;
+	font-family: inherit;
+}
+
+input[type=text], input[type=password] {
+	border: 1px solid #eee;
+	font-size: 14px;
+	font-family: inherit;
+	padding: 5px;
+}
+
+input[type=submit] {
+	font-size: 18px;
+}
+
+.validation {
+	margin-left: 8px;
+	font-size: 14px;
+}
+
+.caption {
+	font-family: 'GTWalsheimProRegular';
+	font-size: 14px;
+}
+
+/* Graph */
+
+#tester {
+	width:1200px;
+	height:700px;
+	margin: 0 auto;
+}
+
+/* Table */
+
+#table {
+	font-size: 16px;
+	font-family: "GTWalsheimProRegular", sans-serif;
+	color: #303030;
+	width: 700px;
+	margin: 0 auto;
+}
+
+thead {
+	background: #f6efc3;
+}
+
+#table th, #table td {
+	padding: 5px 10px;
+}
+
+#table tr:nth-child(even) {
+	background: #faf8ee;
+}
+
+#table tr:hover {
+	background: #F2E69C;
+}

@@ -5,17 +5,47 @@
       xmlns:h="http://java.sun.com/jsf/html"> 
 
 <h:head>
-	<title>Login Form</title>
+	<title>Pi Weather Reporter | Login</title>
+	<link rel="stylesheet" href="resources/css/style.css" />
 </h:head> 
-<body> 
-	<h1>Weather Pi</h1>
-	<h2>Login Form</h2>
-	<p>Username must be 3 or more characters. Password must be more than 6 characters.</p>
-	<h:form>
-		Username: <h:inputText id="username" value="#{user.username}" title="" /><h:message for="username" /><br />
-		Password: <h:inputSecret id="password" value="#{user.password}" title="" type="password" /><h:message for="password" /><br />
-		<h:commandButton value="Submit" action="#{userController.loginSubmit}" />
-	</h:form>
-	<p><a href="index.html">return home</a></p>
-</body> 
+<body>
+	<div id="page">
+		<div id="navbar">
+			<a href="index.html"><div id="title">Pi Weather Reporter</div></a>
+
+			<div id="navlinks">
+				<a href="index.html">home</a>
+				<a href="login.xhtml">login</a>
+				<a href="register.xhtml">register</a>
+				<a href="tableControl.xhtml">reports</a>
+			</div>
+		</div>
+
+		<div id="content">
+			<div class="pagenav">
+				Login
+			</div>
+
+			<p class="caption">Username must be 3 or more characters. Password must be more than 6 characters.</p>
+
+			<h:form>
+				<p>
+					<label>
+						Username
+						<h:inputText id="username" value="#{user.username}" title="" /><h:message for="username" class="validation"/>
+					</label>
+				</p>
+
+				<p>
+					<label>
+						Password
+						<h:inputSecret id="password" value="#{user.password}" title="" type="password" /><h:message for="password" class="validation"/>
+					</label>
+				</p>
+
+				<h:commandButton value="Log in" action="#{userController.loginSubmit}" />
+			</h:form>
+		</div>
+	</div>
+</body>
 </html>

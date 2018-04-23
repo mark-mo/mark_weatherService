@@ -5,85 +5,75 @@
       xmlns:h="http://java.sun.com/jsf/html"> 
 
 <h:head>
-	<title>Tabular Reports</title>
+	<title>Pi Weather Reporter | Tabular Report</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	
-	<style>
-		#table {
-			font-size: 16px;
-			font-family: "GTCinetypeRegular", sans-serif;
-			color: #303030;
-			width: 700px;
-			margin: 0 auto;
-		}
-		
-		thead {
-			background: #f6efc3;
-		}
-		
-		#table th, #table td {
-			padding: 5px 10px;
-		}
-		
-		#table tr:nth-child(even) {
-			background: #faf8ee;
-		}
-		
-		#table tr:hover {
-			background: #F2E69C;
-		}
-	</style>
+	<link rel="stylesheet" href="resources/css/style.css" />
 </h:head> 
-<body> 
-	<h1>Weather Pi</h1>
-	<h2>Tabular Reports</h2>
-	
-	<table id="table" class="table table-bordered">
-		<thead>
-			<th>Humidity</th>
-			<th>Pressure</th>
-			<th>Time</th>
-  		</thead>
-  		<tbody>
-  		</tbody>
-	</table>
-	<p><a href="index.html">return home</a></p>
-	
-	<script>
-		// JSON received
-		function responseSuccess(data) {
-			console.log("REST call returned success!")
-			console.log(JSON.stringify(data))
+<body>
+	<div id="page">
+		<div id="navbar">
+			<a href="index.html"><div id="title">Pi Weather Reporter</div></a>
+
+			<div id="navlinks">
+				<a href="index.html">home</a>
+				<a href="login.xhtml">login</a>
+				<a href="register.xhtml">register</a>
+				<a href="tableControl.xhtml">reports</a>
+			</div>
+		</div>
+
+		<div id="content">
+			<div class="pagenav">
+				<a href="tableControl.xhtml">Reports</a> &rsaquo; Tabular Report
+			</div>
 			
-			// Fill table
-			var tbody = $("#table tbody")
-			for (let reading of data.data) {
-				tbody.append('<tr>\n' +
-						'<td>'+reading.firstAtt+'</td>\n' +
-						'<td>'+reading.secondAtt+'</td>\n' +
-						'<td>'+reading.time+'</td>\n' +
-						'</tr>\n')
-			}
-		}
+			<table id="table" class="table table-bordered">
+				<thead>
+					<th>Humidity</th>
+					<th>Pressure</th>
+					<th>Time</th>
+			  	</thead>
+			  	<tbody>
+			  	</tbody>
+			</table>
 	
-		// When REST call returns error
-		function responseError(request, error) {
-			console.log("ERROR. Request: " + JSON.stringify(request))
-		}
+			<script>
+				// JSON received
+				function responseSuccess(data) {
+					console.log("REST call returned success!")
+					console.log(JSON.stringify(data))
+			
+					// Fill table
+					var tbody = $("#table tbody")
+					for (let reading of data.data) {
+						tbody.append('<tr>\n' +
+								'<td>'+reading.firstAtt+'</td>\n' +
+								'<td>'+reading.secondAtt+'</td>\n' +
+								'<td>'+reading.time+'</td>\n' +
+								'</tr>\n')
+					}
+				}
 	
-		// Make AJAX call with provided link
-		function sendRequest() {
-			$.ajax({
-				url: 'http://weather-weather.193b.starter-ca-central-1.openshiftapps.com/WeatherApp/rest/weather/readings/' + #{report.amount},
-				crossDomain: true,
-				type: 'GET',
-				success: responseSuccess,
-				error: responseError
-			})
-		}
+				// When REST call returns error
+				function responseError(request, error) {
+					console.log("ERROR. Request: " + JSON.stringify(request))
+				}
+	
+				// Make AJAX call with provided link
+				function sendRequest() {
+					$.ajax({
+						url: 'http://weather-weather.193b.starter-ca-central-1.openshiftapps.com/WeatherApp/rest/weather/readings/' + #{report.amount},
+						crossDomain: true,
+						type: 'GET',
+						success: responseSuccess,
+						error: responseError
+					})
+				}
 		
-		// Actually do anything
-		sendRequest()
-	</script>
-</body> 
+				// Actually do anything
+				sendRequest()
+			</script>
+		</div>
+	</div>
+</body>
 </html>

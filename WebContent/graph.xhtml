@@ -5,95 +5,111 @@
       xmlns:h="http://java.sun.com/jsf/html"> 
 
 <h:head>
-	<title>Graph</title>
+	<title>Pi Weather Reporter | Graph</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<link rel="stylesheet" href="resources/css/style.css" />
 </h:head> 
-<body> 
-	<h1>Weather Pi</h1>
-	<h2>Graph</h2>
-	
-	<div id="tester" style="width:1200px; height:700px;"></div>
-	<p><a href="index.html">return home</a></p>
-	
-	<script>
-		var humidityTrace = {
-			type: "scatter",
-			mode: "lines",
-			name: "Humidity",
-			x: [],
-			y: [],
-			line: {color: "#303030"}
-		}
-		
-		var pressureTrace = {
-			type: "scatter",
-			mode: "lines",
-			name: "Pressure",
-			yaxis: "y2",
-			x: [],
-			y: [],
-			line: {color: "#bfb36a"}
-		}
-		
-		function plot() {
-			var data = [humidityTrace, pressureTrace]
+<body>
+	<div id="page">
+		<div id="navbar">
+			<a href="index.html"><div id="title">Pi Weather Reporter</div></a>
+
+			<div id="navlinks">
+				<a href="index.html">home</a>
+				<a href="login.xhtml">login</a>
+				<a href="register.xhtml">register</a>
+				<a href="tableControl.xhtml">reports</a>
+			</div>
+		</div>
+
+		<div id="content">
+			<div class="pagenav">
+				<a href="tableControl.xhtml">Reports</a> &rsaquo; Graphical Report
+			</div>
 			
-			var layout = {
-				title: 'Weather Readings',
-				font: {family: "'RingsideCompressed-Book', sans-serif", size: 16},
-				yaxis: {
-					title: "Humidity (%)",
-				},
-				yaxis2: {
-					title: "Air Pressure (mbar)",
-					titlefont: {color: "#bfb36a"},
-					tickfont: {color: "#bfb36a"},
-					gridcolor: "#f6efc3",
-					overlaying: "y",
-					side: "right"
+			<div id="tester" style=""></div>
+
+			<script>
+				var humidityTrace = {
+					type: "scatter",
+					mode: "lines",
+					name: "Humidity",
+					x: [],
+					y: [],
+					line: {color: "#303030"}
 				}
-			}
-			
-			Plotly.newPlot('tester', data, layout)
-		}
-		
-		// JSON received
-		function responseSuccess(data) {
-			console.log("REST call returned success!")
-			console.log(JSON.stringify(data))
-			
-			for (let reading of data.data) {
-				// Push time and humidity to humidity line graph
-				humidityTrace.x.push(reading.time)
-				humidityTrace.y.push(reading.firstAtt)
 				
-				// Push time and pressure to pressure line graph
-				pressureTrace.x.push(reading.time)
-				pressureTrace.y.push(reading.secondAtt)
-			}
+				var pressureTrace = {
+					type: "scatter",
+					mode: "lines",
+					name: "Pressure",
+					yaxis: "y2",
+					x: [],
+					y: [],
+					line: {color: "#bfb36a"}
+				}
+				
+				function plot() {
+					var data = [humidityTrace, pressureTrace]
+					
+					var layout = {
+						title: 'Weather Readings',
+						font: {family: "'RingsideCompressed-Book', sans-serif", size: 16},
+						yaxis: {
+							title: "Humidity (%)",
+						},
+						yaxis2: {
+							title: "Air Pressure (mbar)",
+							titlefont: {color: "#bfb36a"},
+							tickfont: {color: "#bfb36a"},
+							gridcolor: "#f6efc3",
+							overlaying: "y",
+							side: "right"
+						}
+					}
+					
+					Plotly.newPlot('tester', data, layout)
+				}
+				
+				// JSON received
+				function responseSuccess(data) {
+					console.log("REST call returned success!")
+					console.log(JSON.stringify(data))
+					
+					for (let reading of data.data) {
+						// Push time and humidity to humidity line graph
+						humidityTrace.x.push(reading.time)
+						humidityTrace.y.push(reading.firstAtt)
+						
+						// Push time and pressure to pressure line graph
+						pressureTrace.x.push(reading.time)
+						pressureTrace.y.push(reading.secondAtt)
+					}
+					
+					plot()
+				}
 			
-			plot()
-		}
-	
-		// When REST call returns error
-		function responseError(request, error) {
-			console.log("ERROR. Request: " + JSON.stringify(request))
-		}
-	
-		// Make AJAX call with provided link
-		function sendRequest() {
-			$.ajax({
-				url: 'http://weather-weather.193b.starter-ca-central-1.openshiftapps.com/WeatherApp/rest/weather/readings/' + #{report.amount},
-				crossDomain: true,
-				type: 'GET',
-				success: responseSuccess,
-				error: responseError
-			})
-		}
-		
-		// Actually do anything
-		sendRequest()
-	</script>
-</body> 
+				// When REST call returns error
+				function responseError(request, error) {
+					console.log("ERROR. Request: " + JSON.stringify(request))
+				}
+			
+				// Make AJAX call with provided link
+				function sendRequest() {
+					$.ajax({
+						url: 'http://weather-weather.193b.starter-ca-central-1.openshiftapps.com/WeatherApp/rest/weather/readings/' + #{report.amount},
+						crossDomain: true,
+						type: 'GET',
+						success: responseSuccess,
+						error: responseError
+					})
+				}
+				
+				// Actually do anything
+				sendRequest()
+			</script>
+		</div>
+	</div>
+</body>
 </html>
