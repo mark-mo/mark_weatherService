@@ -44,6 +44,10 @@ public class UserDAO implements DataAccessInterface<Registration> {
 			String username = "weather";
 			String password = "weathPiProject361";
 
+//			String url = "jdbc:mysql://localhost:3306/weather";
+//			String username = "root";
+//			String password = "root";
+
 			try {
 				// Connect to database
 				con = DriverManager.getConnection(url, username, password);
@@ -65,7 +69,7 @@ public class UserDAO implements DataAccessInterface<Registration> {
 		makeConnection();
 		try {
 			// Query for # of rows with matching username and password
-			String query = "SELECT COUNT(*) AS COUNT FROM USERS WHERE USERNAME=? AND PASSWORD=?";
+			String query = "SELECT * FROM USERS WHERE USERNAME=? AND PASSWORD=?";
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setString(1, user.getUsername());
 			stmt.setString(2, user.getPassword());
@@ -78,8 +82,8 @@ public class UserDAO implements DataAccessInterface<Registration> {
 
 				throw new BadLoginException();
 			}
-			user.setUsername(rs.getString(1));
-			user.setPassword(rs.getString(2));
+			user.setUsername(rs.getString(2));
+			user.setPassword(rs.getString(3));
 			rs.close();
 			stmt.close();
 			logging.info("User " + user.getUsername() + " found");
